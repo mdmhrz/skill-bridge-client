@@ -18,8 +18,8 @@ const navItems: NavItem[] = [
   { name: 'Home', href: '/' },
   { name: 'Features', href: '/features' },
   {
-    name: 'Products',
-    href: '/products',
+    name: 'Tutors',
+    href: '/tutors',
     hasDropdown: true,
     dropdownItems: [
       {
@@ -35,8 +35,8 @@ const navItems: NavItem[] = [
       { name: 'Reports', href: '/reports', description: 'Generate insights' },
     ],
   },
-  { name: 'Pricing', href: '/pricing' },
   { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 export default function Header() {

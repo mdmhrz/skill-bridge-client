@@ -25,6 +25,7 @@ import {
     FileText,
     BarChart3
 } from 'lucide-react';
+import Link from 'next/link';
 
 // Types
 export interface NavigationItem {
@@ -78,7 +79,9 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                 "flex h-16 items-center border-b px-6",
                 collapsed && !mobile && "justify-center px-2"
             )}>
-                <div className="flex items-center gap-3">
+                <Link
+                    href="/"
+                    className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
                         <LayoutDashboard className="h-6 w-6 text-primary-foreground" />
                     </div>
@@ -88,7 +91,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             <span className="text-xs text-muted-foreground">Learning Platform</span>
                         </div>
                     )}
-                </div>
+                </Link>
             </div>
 
             {/* Navigation */}
