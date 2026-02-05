@@ -17,6 +17,7 @@ import {
 } from "lucide-react"
 import { Tutor, TutorCategoryRelation } from "@/types"
 import tutorServices from "@/services/tutor.service"
+import PrimaryButton from "@/components/ButtonPrimary"
 
 export default async function TutorDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -137,10 +138,10 @@ export default async function TutorDetailsPage({ params }: { params: Promise<{ i
 
                             {/* CTA Button */}
                             <div className="pt-4">
-                                <Button size="lg" className="text-lg px-8">
+                                <PrimaryButton  >
                                     <Calendar className="w-5 h-5 mr-2" />
                                     Book a Session
-                                </Button>
+                                </PrimaryButton>
                             </div>
                         </div>
                     </div>
