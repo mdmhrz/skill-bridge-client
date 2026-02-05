@@ -18,8 +18,8 @@ const navItems: NavItem[] = [
   { name: 'Home', href: '/' },
   { name: 'Features', href: '/features' },
   {
-    name: 'Products',
-    href: '/products',
+    name: 'Tutors',
+    href: '/tutors',
     hasDropdown: true,
     dropdownItems: [
       {
@@ -35,8 +35,8 @@ const navItems: NavItem[] = [
       { name: 'Reports', href: '/reports', description: 'Generate insights' },
     ],
   },
-  { name: 'Pricing', href: '/pricing' },
   { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 export default function Header() {
@@ -91,7 +91,7 @@ export default function Header() {
         boxShadow: isScrolled ? '0 8px 32px rgba(0, 0, 0, 0.1)' : 'none',
       }}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6">
         <div className="flex h-16 items-center justify-between lg:h-20">
           <motion.div
             className="flex items-center space-x-2"
