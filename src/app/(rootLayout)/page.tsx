@@ -1,14 +1,13 @@
-import { ModeToggle } from "@/components/layout/ModeToggle";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { Footer } from "@/components/layout/Footer";
+import { SkillBridgeBanner } from "@/components/layout/SkillBridgeBanner";
 
 export default function Home() {
 
-    
+
     return (
         <div>
-            <Button className="">Button</Button>
-            <ModeToggle></ModeToggle>
+            <SkillBridgeBanner></SkillBridgeBanner>
+            <Footer></Footer>
         </div>
     );
 }
