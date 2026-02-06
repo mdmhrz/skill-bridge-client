@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import { env } from '@/env';
 import { authClient } from '@/lib/authClient';
 
-import { IconBrandGoogleFilled } from '@tabler/icons-react';
 import Image from 'next/image';
 
 
@@ -12,7 +11,7 @@ const SocialLogin = () => {
             provider: "google",
             callbackURL: env.NEXT_PUBLIC_FRONTEND_BASE_URL,
         });
-        console.log("Google login response:", data);
+        // console.log("Google login response:", data);
     };
 
     return (

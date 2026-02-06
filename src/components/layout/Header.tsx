@@ -8,6 +8,7 @@ import { ModeToggle } from './ModeToggle';
 import { authClient } from '@/lib/authClient';
 import PrimaryButton from '../ButtonPrimary';
 import LogoutButton from '../modules/auth/LogoutButton';
+import { AuthUser } from '@/types';
 
 interface NavItem {
   name: string;
@@ -41,21 +42,15 @@ const navItems: NavItem[] = [
   { name: 'Contact', href: '/contact' },
 ];
 
-export default function Header() {
-  const [user, setUser] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
+export default function Header({ user }: { user: AuthUser | null }) {
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const { theme } = useTheme();
 
 
-  useEffect(() => {
-    authClient.getSession().then((res) => {
-      setUser(res.data?.user)
-      setLoading(false)
-    })
-  }, [])
+
 
   console.log(user, 'Session from header');
 
