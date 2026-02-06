@@ -1,15 +1,11 @@
 'use client';
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { ModeToggle } from './ModeToggle';
-import { AuthResponse } from '@/types';
-import { Button } from "@/components/ui/button";
 import { authClient } from '@/lib/authClient';
-import { useRouter } from 'next/navigation';
 import PrimaryButton from '../ButtonPrimary';
 import LogoutButton from '../modules/auth/LogoutButton';
 
@@ -265,13 +261,7 @@ export default function Header() {
 
                   <>
                     {user ? (
-                      <Link
-                        prefetch={false}
-                        href="/dashboard"
-                        className="text-foreground font-medium transition-colors duration-200 hover:text-rose-500"
-                      >
-                        <Button className='w-full mb-4' onClick={() => handleSignout()}>Logout</Button>
-                      </Link>
+                      <LogoutButton></LogoutButton>
                     ) :
                       <Link
                         prefetch={false}
