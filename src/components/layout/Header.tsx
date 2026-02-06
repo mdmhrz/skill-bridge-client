@@ -52,7 +52,7 @@ export default function Header() {
 
   useEffect(() => {
     authClient.getSession().then((res) => {
-      setUser(res)
+      setUser(res.data?.user)
       setLoading(false)
     })
   }, [])
