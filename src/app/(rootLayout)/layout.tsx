@@ -1,11 +1,14 @@
 import Header from '@/components/layout/Header';
+import { userService } from '@/services/user.service';
 import React from 'react';
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+    const user = await userService.getSession();
+
     return (
         <div>
             <div className='min-h-[80px]'>
-                <Header></Header>
+                <Header user={user.data}></Header>
             </div>
             {children}
         </div>

@@ -6,6 +6,11 @@ import { Menu, X, ChevronDown, ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { ModeToggle } from './ModeToggle';
+import { AuthResponse } from '@/types';
+import { Button } from "@/components/ui/button";
+import { authClient } from '@/lib/authClient';
+import { useRouter } from 'next/navigation';
+import PrimaryButton from '../ButtonPrimary';
 
 interface NavItem {
   name: string;
@@ -39,11 +44,15 @@ const navItems: NavItem[] = [
   { name: 'Contact', href: '/contact' },
 ];
 
-export default function Header() {
+export default function Header({ user }: { user: AuthResponse | null }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const { theme } = useTheme();
+  const router = useRouter()
+
+
+  console.log(user, 'User infor from header');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,6 +82,18 @@ export default function Header() {
     hidden: { opacity: 0, y: -10, scale: 0.95 },
     visible: { opacity: 1, y: 0, scale: 1 },
   };
+
+
+
+  const handleSignout = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login"); // redirect to login page
+        },
+      },
+    });
+  }
 
   return (
     <motion.header
@@ -171,23 +192,38 @@ export default function Header() {
 
           <div className="hidden items-center space-x-4 lg:flex">
             <ModeToggle></ModeToggle>
-            <Link
-              prefetch={false}
-              href="/login"
-              className="text-foreground font-medium transition-colors duration-200 hover:text-rose-500"
-            >
-              Sign In
-            </Link>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                prefetch={false}
-                href="/signup"
-                className="inline-flex items-center space-x-2 rounded-full bg-gradient-to-r from-rose-500 to-rose-700 px-6 py-2.5 font-medium text-white transition-all duration-200 hover:shadow-lg"
-              >
-                <span>Get Started</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </motion.div>
+            <>
+              {user ? (
+                <Link
+                  prefetch={false}
+                  href="/dashboard"
+                  className="text-foreground font-medium transition-colors duration-200 hover:text-rose-500"
+                >
+                  <Button onClick={() => handleSignout()}>Logout</Button>
+                </Link>
+              ) :
+                <Link
+                  prefetch={false}
+                  href="/login"
+                  className="text-foreground font-medium transition-colors duration-200 hover:text-rose-500"
+                >
+                  <PrimaryButton >Log In</PrimaryButton>
+                </Link>
+              }
+            </>
+            {
+              user &&
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  prefetch={false}
+                  href="/dashboard"
+                  className="inline-flex items-center space-x-2 rounded-full bg-gradient-to-r from-rose-500 to-rose-700 px-6 py-2.5 font-medium text-white transition-all duration-200 hover:shadow-lg"
+                >
+                  <span>Dashboard</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </motion.div>
+            }
           </div>
 
           <div className='lg:hidden flex items-center gap-2'>
