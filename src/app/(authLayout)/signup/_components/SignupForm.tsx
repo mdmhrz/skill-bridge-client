@@ -21,6 +21,8 @@ import Link from "next/link"
 import { authClient } from "@/lib/authClient"
 import SocialLogin from "./SocialLogin"
 import { redirect } from "next/navigation"
+import { IconEye, IconEyeOff, IconLock, IconMail, IconUser } from "@tabler/icons-react"
+import { useState } from "react"
 
 const formSchema = z.object({
     name: z.string().min(4, "Name must be at least 4 characters"),
@@ -30,6 +32,7 @@ const formSchema = z.object({
 
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
+    const [showPassword, setShowPassword] = useState(false)
     const router = useRouter()
 
     const form = useForm({
@@ -60,9 +63,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
     })
 
     return (
-        <Card {...props}>
-            <CardHeader>
-                <CardTitle>Create an account</CardTitle>
+        <Card className="border-none bg-transparent shadow-none " {...props}>
+            <CardHeader className="text-center">
+                <CardTitle className="text-2xl font-medium">Welcome to Skill Bridge</CardTitle>
                 <CardDescription>
                     Enter your information below to create your account
                 </CardDescription>
@@ -82,17 +85,44 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                             return (
                                 <Field data-invalid={isInvalid}>
                                     <FieldLabel htmlFor={field.name}>Name</FieldLabel>
-                                    <Input
-                                        type="text"
-                                        id={field.name}
-                                        name={field.name}
-                                        value={field.state.value}
-                                        onChange={(e) => field.handleChange(e.target.value)}
-                                        placeholder="Enter Your Name"
+                                    <div
                                         aria-invalid={isInvalid}
-                                    ></Input>
+                                        className="
+                                            flex items-center gap-4
+                                            border px-4 py-2 rounded-md
+                                            focus-within:ring-1
+                                            focus-within:ring-primary
+                                            focus-within:ring-offset-1
+                                            data-[invalid=true]:border-destructive
+                                        "
+                                    >
+                                        <IconUser className="text-muted-foreground" />
+
+                                        <Input
+                                            type="text"
+                                            id={field.name}
+                                            name={field.name}
+                                            value={field.state.value}
+                                            onChange={(e) => field.handleChange(e.target.value)}
+                                            placeholder="Enter Your Name"
+                                            className="
+                                                flex-1
+                                                border-0
+                                                bg-transparent
+                                                dark:bg-transparent
+                                                shadow-none
+                                                focus-visible:ring-0
+                                                focus-visible:ring-offset-0
+                                                focus:outline-none
+                                                px-0
+                                                placeholder:text-muted-foreground
+                                            "
+                                        />
+                                    </div>
+
                                     {isInvalid && <FieldError errors={field.state.meta.errors} />}
                                 </Field>
+
                             )
                         }} />
 
@@ -102,17 +132,44 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                             return (
                                 <Field data-invalid={isInvalid}>
                                     <FieldLabel htmlFor={field.name}>Email</FieldLabel>
-                                    <Input
-                                        type="email"
-                                        id={field.name}
-                                        name={field.name}
-                                        value={field.state.value}
-                                        onChange={(e) => field.handleChange(e.target.value)}
-                                        placeholder="Enter Your Email"
+                                    <div
                                         aria-invalid={isInvalid}
-                                    ></Input>
+                                        className="
+                                            flex items-center gap-4
+                                            border px-4 py-2 rounded-md
+                                            focus-within:ring-1
+                                            focus-within:ring-primary
+                                            focus-within:ring-offset-1
+                                            data-[invalid=true]:border-destructive
+                                            "
+                                    >
+                                        <IconMail className="text-muted-foreground" />
+
+                                        <Input
+                                            type="email"
+                                            id={field.name}
+                                            name={field.name}
+                                            value={field.state.value}
+                                            onChange={(e) => field.handleChange(e.target.value)}
+                                            placeholder="Enter Your Email"
+                                            className="
+                                                flex-1
+                                                border-0
+                                                bg-transparent
+                                                dark:bg-transparent
+                                                shadow-none
+                                                focus-visible:ring-0
+                                                focus-visible:ring-offset-0
+                                                focus:outline-none
+                                                px-0
+                                                placeholder:text-muted-foreground
+                                            "
+                                        />
+                                    </div>
+
                                     {isInvalid && <FieldError errors={field.state.meta.errors} />}
                                 </Field>
+
                             )
                         }} />
 
@@ -123,17 +180,54 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                             return (
                                 <Field data-invalid={isInvalid}>
                                     <FieldLabel htmlFor={field.name}>Password</FieldLabel>
-                                    <Input
-                                        type="password"
-                                        id={field.name}
-                                        name={field.name}
-                                        value={field.state.value}
-                                        onChange={(e) => field.handleChange(e.target.value)}
-                                        placeholder="Enter Your Password"
+
+                                    <div
                                         aria-invalid={isInvalid}
-                                    ></Input>
+                                        className="
+                                            flex items-center gap-4
+                                            border px-4 py-2 rounded-md
+                                            focus-within:ring-1
+                                            focus-within:ring-primary
+                                            focus-within:ring-offset-1
+                                            data-[invalid=true]:border-destructive
+                                            "
+                                    >
+                                        <IconLock className="text-muted-foreground" />
+
+                                        <Input
+                                            type={showPassword ? "text" : "password"}
+                                            id={field.name}
+                                            name={field.name}
+                                            value={field.state.value}
+                                            onChange={(e) => field.handleChange(e.target.value)}
+                                            placeholder="Enter Your Password"
+                                            className="
+                                                flex-1
+                                                border-0
+                                                bg-transparent
+                                                dark:bg-transparent
+                                                shadow-none
+                                                focus-visible:ring-0
+                                                focus-visible:ring-offset-0
+                                                focus:outline-none
+                                                px-0
+                                                placeholder:text-muted-foreground
+                                            "
+                                        />
+
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="text-muted-foreground hover:text-primary transition"
+                                            tabIndex={-1}
+                                        >
+                                            {showPassword ? <IconEyeOff size={18} /> : <IconEye size={18} />}
+                                        </button>
+                                    </div>
+
                                     {isInvalid && <FieldError errors={field.state.meta.errors} />}
                                 </Field>
+
                             )
                         }} />
 
@@ -141,10 +235,10 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 </form>
             </CardContent>
             <CardFooter className="flex flex-col space-y-2.5">
-                <Button className="w-full" form="signup-form" type="submit">Register</Button>
+                <Button className="w-full py-6 " form="signup-form" type="submit">Register</Button>
                 <SocialLogin></SocialLogin>
                 <FieldDescription className="text-center">
-                    Already registerd? <Link href="/login">Login</Link>
+                    Already registerd? <Link className="text-primary" href="/login">Login</Link>
                 </FieldDescription>
             </CardFooter>
         </Card>
