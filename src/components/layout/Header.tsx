@@ -23,39 +23,31 @@ const navItems: NavItem[] = [
   {
     name: 'Tutors',
     href: '/tutors',
-    hasDropdown: true,
-    dropdownItems: [
-      {
-        name: 'Analytics',
-        href: '/analytics',
-        description: 'Track your metrics',
-      },
-      {
-        name: 'Dashboard',
-        href: '/dashboard',
-        description: 'Manage your data',
-      },
-      { name: 'Reports', href: '/reports', description: 'Generate insights' },
-    ],
   },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];
 
 export default function Header({ user }: { user: AuthUser | null }) {
-
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const { theme } = useTheme();
+  const [themeFromStorage, setThemeFromStorage] = useState<string>('light');
 
+  // read theme from localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setThemeFromStorage(savedTheme);
 
+    // listen to localStorage changes from ModeToggle or elsewhere
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'theme') setThemeFromStorage(e.newValue || 'light');
+    };
+    window.addEventListener('storage', handleStorageChange);
 
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [isScrolled]);
 
-  console.log(user, 'Session from header');
-
-
-  // console.log(user, 'User infor from header');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,15 +57,15 @@ export default function Header({ user }: { user: AuthUser | null }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const headerVariants = {
-    initial: { y: -100, opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-    scrolled: {
-      backdropFilter: 'blur(20px)',
-      backgroundColor:
-        theme === 'dark' ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-    },
+  const backgroundStyle = {
+    backdropFilter: isScrolled ? 'blur(8px)' : 'none',
+    backgroundColor: isScrolled
+      ? themeFromStorage === 'dark'
+        ? 'rgba(0,0,0,0.8)'
+        : 'rgba(255,255,255,0.8)'
+      : 'transparent',
+    boxShadow: isScrolled ? '0 8px 32px rgba(0,0,0,0.1)' : 'none',
+    transition: 'all 0.3s ease-in-out',
   };
 
   const mobileMenuVariants = {
@@ -90,20 +82,10 @@ export default function Header({ user }: { user: AuthUser | null }) {
 
   return (
     <motion.header
-      className="fixed top-0 right-0 left-0 z-50 transition-all duration-300"
-      variants={headerVariants}
-      initial="initial"
-      animate={isScrolled ? 'scrolled' : 'animate'}
-      transition={{ duration: 0.3, ease: 'easeInOut' }}
-      style={{
-        backdropFilter: isScrolled ? 'blur(20px)' : 'none',
-        backgroundColor: isScrolled
-          ? theme === 'dark'
-            ? 'rgba(0, 0, 0, 0.8)'
-            : 'rgba(255, 255, 255, 0.8)'
-          : 'transparent',
-        boxShadow: isScrolled ? '0 8px 32px rgba(0, 0, 0, 0.1)' : 'none',
-      }}
+      className="fixed top-0 left-0 right-0 z-50"
+      style={backgroundStyle}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
     >
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex h-16 items-center justify-between lg:h-20">
@@ -146,39 +128,6 @@ export default function Header({ user }: { user: AuthUser | null }) {
                     <ChevronDown className="h-4 w-4 transition-transform duration-200" />
                   )}
                 </Link>
-
-                {item.hasDropdown && (
-                  <AnimatePresence>
-                    {activeDropdown === item.name && (
-                      <motion.div
-                        className="border-border bg-background/95 absolute top-full left-0 mt-2 w-64 overflow-hidden rounded-xl border shadow-xl backdrop-blur-lg"
-                        variants={dropdownVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="hidden"
-                        transition={{ duration: 0.2 }}
-                      >
-                        {item.dropdownItems?.map((dropdownItem) => (
-                          <Link
-                            prefetch={false}
-                            key={dropdownItem.name}
-                            href={dropdownItem.href}
-                            className="hover:bg-muted block px-4 py-3 transition-colors duration-200"
-                          >
-                            <div className="text-foreground font-medium">
-                              {dropdownItem.name}
-                            </div>
-                            {dropdownItem.description && (
-                              <div className="text-muted-foreground text-sm">
-                                {dropdownItem.description}
-                              </div>
-                            )}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                )}
               </div>
             ))}
           </nav>
