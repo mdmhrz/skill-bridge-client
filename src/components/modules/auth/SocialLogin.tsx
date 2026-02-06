@@ -3,6 +3,7 @@ import { env } from '@/env';
 import { authClient } from '@/lib/authClient';
 
 import { IconBrandGoogleFilled } from '@tabler/icons-react';
+import Image from 'next/image';
 
 
 const SocialLogin = () => {
@@ -15,7 +16,7 @@ const SocialLogin = () => {
     };
 
     return (
-        <div className="w-full space-y-4">
+        <div className="w-full space-y-4 mt-2">
             {/* OR Divider */}
             <div className="flex items-center gap-3">
                 <div className="h-px flex-1 bg-border" />
@@ -30,9 +31,9 @@ const SocialLogin = () => {
                 onClick={handleGoogleLogin}
                 variant="outline"
                 type="button"
-                className="w-full flex items-center gap-2"
+                className="w-full flex items-center gap-2 py-5.5"
             >
-                <IconBrandGoogleFilled stroke={2} />
+                <Image priority src="/google_logo.svg" alt="google" width={20} height={20} />
                 <span>Continue with Google</span>
             </Button>
         </div>

@@ -19,25 +19,26 @@ import * as z from "zod"
 
 import Link from "next/link"
 import { authClient } from "@/lib/authClient"
-
+import SocialLogin from "./SocialLogin"
 import { redirect } from "next/navigation"
 import { IconEye, IconEyeOff, IconLock, IconMail, IconUser } from "@tabler/icons-react"
 import { useState } from "react"
 import PrimaryButton from "@/components/ButtonPrimary"
-import SocialLogin from "../../signup/_components/SocialLogin"
 
 const formSchema = z.object({
+    name: z.string().min(4, "Name must be at least 4 characters"),
     email: z.string().email("Invalid email"),
     password: z.string().min(8, "Password must be at least 8 characters"),
 })
 
 
-export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
+export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
     const [showPassword, setShowPassword] = useState(false)
     const router = useRouter()
 
     const form = useForm({
         defaultValues: {
+            name: "",
             email: "",
             password: ""
         },
@@ -47,14 +48,14 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
         onSubmit: async ({ value }) => {
             // console.log("Submit Clicked", value)
             toast.promise(
-                authClient.signIn.email(value),
+                authClient.signUp.email(value),
                 {
-                    loading: "Signing In...",
+                    loading: "Creating user...",
                     success: (res) => {
                         if (res?.error) throw new Error(res.error.message)
 
                         router.push("/")
-                        return "Signed In successfully"
+                        return "User created successfully. Check your email."
                     },
                     error: (err) => err.message || "Something went wrong",
                 }
@@ -65,9 +66,9 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
     return (
         <Card className="border-none bg-transparent shadow-none " {...props}>
             <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-semibold">Welcome Back</CardTitle>
+                <CardTitle className="text-2xl font-semibold">Welcome to Skill Bridge</CardTitle>
                 <CardDescription>
-                    Enter your credentials to login
+                    Enter your information below to create your account
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -79,6 +80,53 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
                     }}>
                     <FieldGroup className="gap-5">
 
+                        {/* Name field */}
+                        <form.Field name="name" children={(field) => {
+                            const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+                            return (
+                                <Field data-invalid={isInvalid}>
+                                    <FieldLabel htmlFor={field.name}>Name</FieldLabel>
+                                    <div
+                                        className="
+                                            flex items-center gap-4
+                                            border px-4 py-1 rounded-md
+                                            focus-within:ring-1
+                                            focus-within:ring-primary
+                                            focus-within:ring-offset-1
+                                            data-[invalid=true]:border-destructive
+                                        "
+                                    >
+                                        <IconUser className="text-muted-foreground" />
+
+                                        <Input
+                                            aria-invalid={isInvalid}
+                                            type="text"
+                                            id={field.name}
+                                            name={field.name}
+                                            value={field.state.value}
+                                            onChange={(e) => field.handleChange(e.target.value)}
+                                            placeholder="Enter Your Name"
+                                            className="
+                                                flex-1
+                                                border-0
+                                                bg-transparent
+                                                dark:bg-transparent
+                                                shadow-none
+                                                focus-visible:ring-0
+                                                focus-visible:ring-offset-0
+                                                focus:outline-none
+                                                px-0
+                                                placeholder:text-muted-foreground
+                                            "
+                                        />
+                                    </div>
+
+                                    {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                                </Field>
+
+                            )
+                        }} />
+
                         {/* Email Field */}
                         <form.Field name="email" children={(field) => {
                             const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
@@ -86,7 +134,6 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
                                 <Field data-invalid={isInvalid}>
                                     <FieldLabel htmlFor={field.name}>Email</FieldLabel>
                                     <div
-
                                         className="
                                             flex items-center gap-4
                                             border px-4 py-1 rounded-md
@@ -189,10 +236,10 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
                 </form>
             </CardContent>
             <CardFooter className="flex flex-col space-y-2.5">
-                <PrimaryButton className="w-full py-6 " form="signup-form" type="submit">Register</PrimaryButton>
+                <PrimaryButton className="w-full py-5.5 text-white" form="signup-form" type="submit">Register</PrimaryButton>
                 <SocialLogin></SocialLogin>
                 <FieldDescription className="text-center">
-                    Don&apos;t have an account? <Link className="text-primary" href="/signup">Register</Link>
+                    Already registerd? <Link className="text-primary" href="/login">Login</Link>
                 </FieldDescription>
             </CardFooter>
         </Card>

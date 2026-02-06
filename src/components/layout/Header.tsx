@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { authClient } from '@/lib/authClient';
 import { useRouter } from 'next/navigation';
 import PrimaryButton from '../ButtonPrimary';
+import LogoutButton from '../modules/auth/LogoutButton';
 
 interface NavItem {
   name: string;
@@ -194,20 +195,14 @@ export default function Header({ user }: { user: AuthResponse | null }) {
             <ModeToggle></ModeToggle>
             <>
               {user ? (
-                <Link
-                  prefetch={false}
-                  href="/dashboard"
-                  className="text-foreground font-medium transition-colors duration-200 hover:text-rose-500"
-                >
-                  <Button onClick={() => handleSignout()}>Logout</Button>
-                </Link>
+                <LogoutButton></LogoutButton>
               ) :
                 <Link
                   prefetch={false}
                   href="/login"
                   className="text-foreground font-medium transition-colors duration-200 hover:text-rose-500"
                 >
-                  <PrimaryButton >Log In</PrimaryButton>
+                  <PrimaryButton className='text-white'>Log In</PrimaryButton>
                 </Link>
               }
             </>
@@ -266,22 +261,37 @@ export default function Header({ user }: { user: AuthResponse | null }) {
                   </Link>
                 ))}
                 <div className="space-y-2 px-4 py-2">
-                  <Link
-                    prefetch={false}
-                    href="/login"
-                    className="text-foreground hover:bg-muted block w-full rounded-lg py-2.5 text-center font-medium transition-colors duration-200"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    prefetch={false}
-                    href="/signup"
-                    className="block w-full rounded-lg bg-gradient-to-r from-rose-500 to-rose-700 py-2.5 text-center font-medium text-white transition-all duration-200 hover:shadow-lg"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Get Started
-                  </Link>
+
+                  <>
+                    {user ? (
+                      <Link
+                        prefetch={false}
+                        href="/dashboard"
+                        className="text-foreground font-medium transition-colors duration-200 hover:text-rose-500"
+                      >
+                        <Button className='w-full mb-4' onClick={() => handleSignout()}>Logout</Button>
+                      </Link>
+                    ) :
+                      <Link
+                        prefetch={false}
+                        href="/login"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-foreground font-medium transition-colors duration-200 hover:text-rose-500"
+                      >
+                        <PrimaryButton className='w-full py-6 text-white' >Log In</PrimaryButton>
+                      </Link>
+                    }
+                  </>
+
+                  {user &&
+                    <Link
+                      prefetch={false}
+                      href="/dashboard"
+                      className="block w-full rounded-lg bg-gradient-to-r from-rose-500 to-rose-700 py-2.5 text-center font-medium text-white transition-all duration-200 hover:shadow-lg"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Dashboard
+                    </Link>}
                 </div>
               </div>
             </motion.div>
