@@ -45,15 +45,26 @@ const navItems: NavItem[] = [
   { name: 'Contact', href: '/contact' },
 ];
 
-export default function Header({ user }: { user: AuthResponse | null }) {
+export default function Header() {
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const { theme } = useTheme();
-  const router = useRouter()
 
 
-  console.log(user, 'User infor from header');
+  useEffect(() => {
+    authClient.getSession().then((res) => {
+      setUser(res)
+      setLoading(false)
+    })
+  }, [])
+
+  console.log(user, 'Session from header');
+
+
+  // console.log(user, 'User infor from header');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,16 +96,6 @@ export default function Header({ user }: { user: AuthResponse | null }) {
   };
 
 
-
-  const handleSignout = async () => {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          router.push("/login"); // redirect to login page
-        },
-      },
-    });
-  }
 
   return (
     <motion.header

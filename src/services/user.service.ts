@@ -1,34 +1,33 @@
-import { env } from "@/env"
-import { cookies } from "next/headers"
+import { env } from "@/env";
+import { cookies } from "next/headers";
 
-const AUTH_URL = env.AUTH_URL
+const AUTH_URL = env.AUTH_URL;
 
 export const userService = {
     getSession: async function () {
         try {
-            const cookieStore = await cookies() // <-- NO await
-            const sessionToken = cookieStore.get("better-auth.session_token")?.value
+            const cookieStore = await cookies()
+            // console.log(cookieStore.get("better-auth.session_token"));
 
-            if (!sessionToken) {
-                return { data: null, error: { message: "No session token found" } }
-            }
+            // const session = await authClient.getSession();
 
             const res = await fetch(`${AUTH_URL}/get-session`, {
                 headers: {
-                    Authorization: `Bearer ${sessionToken}`,
+                    Cookie: cookieStore.toString()
                 },
-                cache: "no-store",
+                cache: 'no-store'
             })
 
-            if (!res.ok) {
-                return { data: null, error: { message: "Session fetch failed" } }
+            const session = await res.json();
+
+            if (session === null) {
+                return { data: null, error: { message: 'Session not found' } };
             }
 
-            const session = await res.json()
-            return { data: session, error: null }
+            return { data: session, error: null };
         } catch (error) {
-            console.error("Error fetching session:", error)
-            return { data: null, error: { message: "Error fetching session" } }
+            console.error('Error fetching session:', error);
+            return { data: null, error: { message: 'Error fetching session' } };
         }
-    },
+    }
 }
