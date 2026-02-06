@@ -23,7 +23,6 @@ export const userService = {
             if (session === null) {
                 return { data: null, error: { message: 'Session not found' } };
             }
-
             return { data: session, error: null };
         } catch (error) {
             console.error('Error fetching session:', error);
