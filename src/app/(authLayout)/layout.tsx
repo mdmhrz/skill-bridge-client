@@ -30,9 +30,9 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
                         </span>
                     </Link>
 
-                    <PrimaryButton className='text-white'>Back To Home</PrimaryButton>
+                    <PrimaryButton className='text-white'><Link href={"/"}>Back To Home</Link></PrimaryButton>
                 </div>
-                <div className='flex-1 border flex items-center justify-center '>
+                <div className='flex-1  flex items-center justify-center '>
 
                     {children}
                 </div>

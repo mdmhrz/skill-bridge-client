@@ -1,4 +1,6 @@
+
 'use client'
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -18,6 +20,7 @@ import * as z from "zod"
 import Link from "next/link"
 import { authClient } from "@/lib/authClient"
 import SocialLogin from "./SocialLogin"
+import { redirect } from "next/navigation"
 
 const formSchema = z.object({
     name: z.string().min(4, "Name must be at least 4 characters"),
@@ -27,6 +30,7 @@ const formSchema = z.object({
 
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
+    const router = useRouter()
 
     const form = useForm({
         defaultValues: {
@@ -39,19 +43,19 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
         },
         onSubmit: async ({ value }) => {
             // console.log("Submit Clicked", value)
-            const toastId = toast.loading("Creating user")
-            try {
-                const { data, error } = await authClient.signUp.email(value)
+            toast.promise(
+                authClient.signUp.email(value),
+                {
+                    loading: "Creating user...",
+                    success: (res) => {
+                        if (res?.error) throw new Error(res.error.message)
 
-                if (error) {
-                    toast.error(error.message, { id: toastId })
-                    return
+                        router.push("/")
+                        return "User created successfully. Check your email."
+                    },
+                    error: (err) => err.message || "Something went wrong",
                 }
-
-                toast.success("User Created Successfully", { id: toastId })
-            } catch (error) {
-                toast.error("Something Went Wrong, Pleast try again", { id: toastId })
-            }
+            )
         }
     })
 
