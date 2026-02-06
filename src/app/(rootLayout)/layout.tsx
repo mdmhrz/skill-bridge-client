@@ -7,10 +7,12 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
     return (
         <div>
-            <div className='min-h-[80px]'>
-                <Header user={user?.data?.user}></Header>
+
+            <Header user={user?.data?.user}></Header>
+            <div>
+
+                {children}
             </div>
-            {children}
         </div>
     );
 };
