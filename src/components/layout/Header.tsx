@@ -113,10 +113,6 @@ export default function Header({ user }: { user: AuthUser | null }) {
               <div
                 key={item.name}
                 className="relative"
-                onMouseEnter={() =>
-                  item.hasDropdown && setActiveDropdown(item.name)
-                }
-                onMouseLeave={() => setActiveDropdown(null)}
               >
                 <Link
                   prefetch={false}
