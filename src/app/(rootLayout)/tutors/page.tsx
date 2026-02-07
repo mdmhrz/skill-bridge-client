@@ -1,3 +1,4 @@
+import { NothingFound } from "@/components/global/NothingFound"
 import { PaginationControl } from "@/components/global/PaginationControl"
 import { TutorCard } from "@/components/modules/tutor/TutorCard"
 import TutorFilters from "@/components/modules/tutor/TutorFilters"
@@ -75,11 +76,21 @@ export default async function TutorsPage(
                         <section className="container flex-1 overflow-y-auto no-scrollbar">
 
 
-                            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                                {data.data?.map((tutor: Tutor) => (
-                                    <TutorCard key={tutor.id} tutor={tutor} />
-                                ))}
-                            </div>
+                            {data.data.length > 0 ? (
+                                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                                    {data.data.map((tutor: Tutor) => (
+                                        <TutorCard key={tutor.id} tutor={tutor} />
+                                    ))}
+                                </div>
+                            ) : (
+                                <NothingFound
+                                    title="No tutors found"
+                                    description="We couldn’t find any tutors matching your filters. Try changing search terms or experience level."
+                                    actionLabel="Clear filters"
+                                    className="h-full"
+                                />
+                            )}
+
                         </section>
 
 
