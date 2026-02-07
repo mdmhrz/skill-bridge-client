@@ -5,7 +5,8 @@ import { cn } from '@/lib/utils';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, Menu } from 'lucide-react';
-import SidebarContent, { UserData } from './SidebarContent';
+import SidebarContent from './SidebarContent';
+import { AuthUser } from '@/types';
 
 interface SidebarContextType {
     openMobileSidebar: () => void;
@@ -22,7 +23,7 @@ export const useSidebar = () => {
 };
 
 interface AppSidebarProps {
-    user: UserData;
+    user: AuthUser;
     children: React.ReactNode;
 }
 

@@ -10,6 +10,7 @@ import PrimaryButton from '../ButtonPrimary';
 import LogoutButton from '../modules/auth/LogoutButton';
 import { AuthUser } from '@/types';
 import { userService } from '@/services/user.service';
+import Logo from '../global/Logo';
 
 interface NavItem {
   name: string;
@@ -37,20 +38,7 @@ export default function Header({ user }: { user: AuthUser | null }) {
 
   console.log("User data found", user)
 
-  // bypass try from client component
 
-  // const [sessionUser, setSessionUser] = useState<AuthUser | null>(null);
-  // useEffect(() => {
-  //   const fetchSession = async () => {
-  //     try {
-  //       const session = await authClient.getSession();
-  //       setSessionUser(session.user);
-  //     } catch (error) {
-  //       console.error('Error fetching session:', error);
-  //     }
-  //   };
-  //   fetchSession();
-  // })
 
 
   // read theme from localStorage
@@ -118,12 +106,7 @@ export default function Header({ user }: { user: AuthUser | null }) {
               href="/"
               className="flex items-center space-x-2"
             >
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-rose-500 to-rose-700">
-                <Sparkles className="h-5 w-5 text-white" />
-              </div>
-              <span className="bg-gradient-to-r from-rose-500 to-rose-700 bg-clip-text text-xl font-bold text-transparent">
-                Skill Bridge
-              </span>
+             <Logo></Logo>
             </Link>
           </motion.div>
 
@@ -220,7 +203,7 @@ export default function Header({ user }: { user: AuthUser | null }) {
 
                   <>
                     {user ? (
-                      <LogoutButton></LogoutButton>
+                      <LogoutButton className='w-full mb-4' ></LogoutButton>
                     ) :
                       <Link
                         prefetch={false}

@@ -19,7 +19,7 @@ import {
 import { authClient } from "@/lib/authClient"
 import PrimaryButton from "@/components/ButtonPrimary"
 
-const LogoutButton = () => {
+const LogoutButton = ({ className }: { className?: string }) => {
     const router = useRouter()
     const [loading, setLoading] = React.useState(false)
 
@@ -41,10 +41,10 @@ const LogoutButton = () => {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button>Logout</Button>
+                <Button className={className}>Logout</Button>
             </AlertDialogTrigger>
 
-            <AlertDialogContent>
+            <AlertDialogContent className="z-[999999]!">
                 <AlertDialogHeader>
                     <AlertDialogTitle>Confirm logout</AlertDialogTitle>
                     <AlertDialogDescription>

@@ -17,22 +17,28 @@ import {
     Menu,
     Search,
 } from 'lucide-react';
-import { AppSidebar, MobileMenuButton, UserData } from './dashboard/_component';
+import { AppSidebar, MobileMenuButton } from './_component';
+import { AuthUser } from '@/types';
+import { userService } from '@/services/user.service';
+import { Roles } from '@/constants/role';
+import LogoutButton from '@/components/modules/auth/LogoutButton';
+import LogoutComponent from './_component/LogoutComponent';
+
+export const dynamic = 'force-dynamic';
 
 
 interface DashboardLayoutProps {
-    children: React.ReactNode;
-    user?: UserData;
+    children?: React.ReactNode;
+    admin?: React.ReactNode;
+    student?: React.ReactNode;
+    tutor?: React.ReactNode;
 }
 
-const DashboardLayout = ({
-    children,
-    user = {
-        name: 'John Doe',
-        email: 'john@example.com',
-        image: undefined
-    }
-}: DashboardLayoutProps) => {
+const DashboardLayout = async ({ children, admin, student, tutor }: DashboardLayoutProps) => {
+
+    const { data } = await userService.getSession()
+
+    const user = data.user
 
     const getInitials = (name: string) => {
         return name
@@ -108,10 +114,7 @@ const DashboardLayout = ({
                                             <span>Notifications</span>
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem className="text-destructive focus:text-destructive">
-                                            <LogOut className="mr-2 h-4 w-4" />
-                                            <span>Log out</span>
-                                        </DropdownMenuItem>
+                                        <LogoutComponent></LogoutComponent>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </div>
@@ -120,7 +123,7 @@ const DashboardLayout = ({
 
                     {/* Main Content Area */}
                     <main className="flex-1 overflow-y-auto bg-muted/30 p-6">
-                        {children}
+                        {user.role === Roles.student ? student : user.role === Roles.tutor ? tutor : admin}
                     </main>
                 </div>
             </AppSidebar>

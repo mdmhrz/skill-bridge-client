@@ -13,38 +13,26 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
     LayoutDashboard,
-    Users,
-    BookOpen,
-    Calendar,
-    MessageSquare,
     Settings,
     LogOut,
     User,
     Bell,
-    Home,
-    FileText,
-    BarChart3
+    Sparkles,
 } from 'lucide-react';
 import Link from 'next/link';
+import { Roles } from '@/constants/role';
+import studentRoutes from '@/routes/student.routes';
+import tutorRoutes from '@/routes/tutor.routes';
+import adminRoutes from '@/routes/admin.routes';
+import { NavigationItem } from '@/types/userRoute.type';
+import { AuthUser } from '@/types';
 
-// Types
-export interface NavigationItem {
-    name: string;
-    href: string;
-    icon: React.ElementType;
-    badge?: number;
-}
 
-export interface UserData {
-    name: string;
-    email: string;
-    image?: string;
-}
 
 interface SidebarContentProps {
     mobile?: boolean;
     collapsed?: boolean;
-    user: UserData;
+    user: AuthUser;
 }
 
 const SidebarContent: React.FC<SidebarContentProps> = ({
@@ -53,15 +41,26 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     user
 }) => {
     // Navigation items
-    const navigationItems: NavigationItem[] = [
-        { name: 'Dashboard', href: '/dashboard', icon: Home },
-        { name: 'Tutors', href: '/tutors', icon: Users },
-        { name: 'Courses', href: '/courses', icon: BookOpen },
-        { name: 'Schedule', href: '/schedule', icon: Calendar, badge: 3 },
-        { name: 'Messages', href: '/messages', icon: MessageSquare, badge: 5 },
-        { name: 'Analytics', href: '/analytics', icon: BarChart3 },
-        { name: 'Documents', href: '/documents', icon: FileText },
-    ];
+    const navigationItems: NavigationItem[] = [];
+
+
+    switch (user.role) {
+        case Roles.student:
+            navigationItems.push(...studentRoutes);
+            break;
+
+        case Roles.tutor:
+            navigationItems.push(...tutorRoutes);
+            break;
+
+        case Roles.admin:
+            navigationItems.push(...adminRoutes);
+            break;
+
+        default:
+            break;
+    }
+
 
     const getInitials = (name: string) => {
         return name
@@ -82,12 +81,12 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                 <Link
                     href="/"
                     className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                        <LayoutDashboard className="h-6 w-6 text-primary-foreground" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-rose-500 to-rose-700">
+                        <Sparkles className="h-6 w-6 text-white" />
                     </div>
                     {(!collapsed || mobile) && (
                         <div className="flex flex-col">
-                            <span className="text-lg font-bold text-foreground">SkillBridge</span>
+                            <span className="bg-gradient-to-r from-rose-500 to-rose-700 bg-clip-text text-xl font-bold text-transparent">SkillBridge</span>
                             <span className="text-xs text-muted-foreground">Learning Platform</span>
                         </div>
                     )}
@@ -145,7 +144,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             )}
                         >
                             <Avatar className="h-8 w-8 border-2 border-border">
-                                <AvatarImage src={user.image} alt={user.name} />
+                                <AvatarImage src={user?.image!} alt={user?.name} />
                                 <AvatarFallback className="bg-primary text-primary-foreground text-sm">
                                     {getInitials(user.name)}
                                 </AvatarFallback>
