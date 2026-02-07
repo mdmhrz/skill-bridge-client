@@ -10,7 +10,7 @@ const TutorProfilesLoading = () => {
             <MultiColumnSkeleton
                 leftColumnWidth="4"  // 4/12 width (33%)
                 rightRows={5}
-            />
+            /> *
         </div>
     );
 };
