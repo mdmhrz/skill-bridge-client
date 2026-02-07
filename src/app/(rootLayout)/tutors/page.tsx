@@ -1,3 +1,4 @@
+import { NothingFound } from "@/components/global/NothingFound"
 import { PaginationControl } from "@/components/global/PaginationControl"
 import { TutorCard } from "@/components/modules/tutor/TutorCard"
 import TutorFilters from "@/components/modules/tutor/TutorFilters"
@@ -5,8 +6,6 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import tutorServices from "@/services/tutor.service"
 import { Tutor } from "@/types"
-// import { div } from "framer-motion/client"
-
 
 
 
@@ -51,16 +50,8 @@ export default async function TutorsPage(
 
             <div className="flex gap-6 h-[calc(100vh-84px)]">
                 {/* Sidebar */}
-                <aside className="hidden md:flex w-72 flex-col border-r bg-accent rounded-lg">
-                    <div className="p-4">
-                        <h2 className="text-lg font-semibold">Filters</h2>
-                    </div>
-
-                    <Separator />
-
-                    <ScrollArea className="flex-1 p-4">
-                        <TutorFilters />
-                    </ScrollArea>
+                <aside className="hidden md:flex w-72 pb-6">
+                    <TutorFilters />
                 </aside>
 
                 {/* Main content */}
@@ -75,13 +66,21 @@ export default async function TutorsPage(
                         <section className="container flex-1 overflow-y-auto no-scrollbar">
 
 
-                            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                                {data.data?.map((tutor: Tutor) => (
-                                    <TutorCard key={tutor.id} tutor={tutor} />
-                                ))}
-                            </div>
+                            {data.data.length > 0 ? (
+                                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                                    {data.data.map((tutor: Tutor) => (
+                                        <TutorCard key={tutor.id} tutor={tutor} />
+                                    ))}
+                                </div>
+                            ) : (
+                                <NothingFound
+                                    title="No tutors found"
+                                    description="We couldn’t find any tutors matching your filters. Try changing search terms or experience level."
+                                    actionLabel="Clear filters"
+                                    className="h-full"
+                                />
+                            )}
                         </section>
-
 
                         {/* Pagination control */}
                         {data.meta.totalPages > 1 && data.meta.total > 0 && data.meta.limit > 0 &&
