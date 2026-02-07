@@ -13,17 +13,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
     LayoutDashboard,
-    Users,
-    BookOpen,
-    Calendar,
-    MessageSquare,
     Settings,
     LogOut,
     User,
     Bell,
-    Home,
-    FileText,
-    BarChart3
+    Sparkles,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Roles } from '@/constants/role';
@@ -34,12 +28,6 @@ import { NavigationItem } from '@/types/userRoute.type';
 import { AuthUser } from '@/types';
 
 
-
-export interface UserData {
-    name: string;
-    email: string;
-    image?: string;
-}
 
 interface SidebarContentProps {
     mobile?: boolean;
@@ -93,12 +81,12 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                 <Link
                     href="/"
                     className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                        <LayoutDashboard className="h-6 w-6 text-primary-foreground" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-rose-500 to-rose-700">
+                        <Sparkles className="h-6 w-6 text-white" />
                     </div>
                     {(!collapsed || mobile) && (
                         <div className="flex flex-col">
-                            <span className="text-lg font-bold text-foreground">SkillBridge</span>
+                            <span className="bg-gradient-to-r from-rose-500 to-rose-700 bg-clip-text text-xl font-bold text-transparent">SkillBridge</span>
                             <span className="text-xs text-muted-foreground">Learning Platform</span>
                         </div>
                     )}

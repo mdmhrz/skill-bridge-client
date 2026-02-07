@@ -22,10 +22,13 @@ import { AuthUser } from '@/types';
 import { userService } from '@/services/user.service';
 import { Roles } from '@/constants/role';
 import LogoutButton from '@/components/modules/auth/LogoutButton';
+import LogoutComponent from './_component/LogoutComponent';
+
+export const dynamic = 'force-dynamic';
 
 
 interface DashboardLayoutProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     admin?: React.ReactNode;
     student?: React.ReactNode;
     tutor?: React.ReactNode;
@@ -111,10 +114,7 @@ const DashboardLayout = async ({ children, admin, student, tutor }: DashboardLay
                                             <span>Notifications</span>
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem className="text-destructive focus:text-destructive">
-                                            <LogOut className="mr-2 h-4 w-4" />
-                                            <LogoutButton className='bg-transparent text-destructive hover:bg-transparent -ml-4'></LogoutButton>
-                                        </DropdownMenuItem>
+                                        <LogoutComponent></LogoutComponent>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </div>

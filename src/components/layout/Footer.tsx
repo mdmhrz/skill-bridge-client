@@ -14,6 +14,7 @@ import {
     MapPin,
     Send
 } from "lucide-react"
+import Logo from "../global/Logo"
 
 export function Footer() {
     const currentYear = new Date().getFullYear()
@@ -65,7 +66,7 @@ export function Footer() {
                         {/* Brand Section */}
                         <div className="lg:col-span-2 space-y-4">
                             <Link href="/" className="inline-block">
-                                <h3 className="text-2xl font-bold text-foreground">Skill Bridge</h3>
+                                <Logo></Logo>
                             </Link>
                             <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
                                 Connecting students with expert tutors for personalized online learning.

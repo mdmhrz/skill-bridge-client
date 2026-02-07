@@ -44,7 +44,7 @@ const LogoutButton = ({ className }: { className?: string }) => {
                 <Button className={className}>Logout</Button>
             </AlertDialogTrigger>
 
-            <AlertDialogContent>
+            <AlertDialogContent className="z-[999999]!">
                 <AlertDialogHeader>
                     <AlertDialogTitle>Confirm logout</AlertDialogTitle>
                     <AlertDialogDescription>

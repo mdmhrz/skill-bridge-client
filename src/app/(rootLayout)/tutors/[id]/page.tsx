@@ -107,7 +107,7 @@ export default async function TutorDetailsPage({ params }: { params: Promise<{ i
                                 <Separator orientation="vertical" className="h-6" />
 
                                 <div className="flex items-center gap-2">
-                                    <DollarSign className="w-5 h-5 text-green-600" />
+                                    {/* <DollarSign className="w-5 h-5 text-green-600" /> */}
                                     <span className="text-2xl font-bold text-green-600">
                                         ${data?.hourlyRate || 0}
                                     </span>

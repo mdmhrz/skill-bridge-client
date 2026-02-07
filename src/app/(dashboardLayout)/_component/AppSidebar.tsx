@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, Menu } from 'lucide-react';
-import SidebarContent, { UserData } from './SidebarContent';
+import SidebarContent from './SidebarContent';
 import { AuthUser } from '@/types';
 
 interface SidebarContextType {
