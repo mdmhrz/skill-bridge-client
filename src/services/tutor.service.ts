@@ -5,15 +5,37 @@ interface TutorResponse<T> {
     error: { message: string } | null;
 }
 
+interface GetTutorsParams {
+    sortBy?: string;
+    search?: string;
+    page?: number;
+    limit?: number;
+    sortOrder?: string;
+    experience?: number
+}
+
 
 const API_URL = env.BACKEND_BASE_URL
 
 const tutorServices = {
 
-    getTutors: async () => {
+    getTutors: async (params?: GetTutorsParams) => {
 
         try {
-            const response = await fetch(`${API_URL}/api/tutor`);
+            const url = new URL(`${API_URL}/api/tutor`);
+
+
+            if (params) {
+                Object.entries(params).forEach(([key, value]) => {
+                    if (value !== undefined && value !== null && value !== '') {
+                        url.searchParams.set(key, String(value));
+                    }
+                })
+            }
+
+            console.log(url)
+
+            const response = await fetch(url.toString());
             const tutors = await response.json();
             return { data: tutors, error: null };
         } catch (error) {

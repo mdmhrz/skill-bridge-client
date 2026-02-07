@@ -59,11 +59,12 @@ const LogoutButton = () => {
                     </AlertDialogCancel>
 
                     <AlertDialogAction
+
                         onClick={handleLogout}
                         disabled={loading}
-                        className="bg-transparent hover:bg-transparent -ml-2"
+                        className="bg-rose-500 hover:bg-rose-600 text-white"
                     >
-                        <PrimaryButton>{loading ? "Logging out..." : "Yes, logout"}</PrimaryButton>
+                        {loading ? "Logging out..." : "Yes, logout"}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

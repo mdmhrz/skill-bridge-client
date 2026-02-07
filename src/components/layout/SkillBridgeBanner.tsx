@@ -19,8 +19,8 @@ export function SkillBridgeBanner() {
     ]
 
     return (
-        <div className="relative bg-gradient-to-br from-primary/5 via-background to-secondary/5 overflow-hidden">
-            <div className="container mx-auto px-4 py-12 md:py-20">
+        <div className="relative bg-gradient-to-br from-primary/5 via-background to-secondary/5 overflow-hidden md:min-h-[calc(100vh-84px)] flex items-center justify-center">
+            <div className="container mx-auto px-6 py-12 md:py-20">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                     {/* Left Content */}
                     <div className="space-y-8">
@@ -64,7 +64,7 @@ export function SkillBridgeBanner() {
                                     />
                                 </div>
                                 <PrimaryButton size="lg" className="h-12 px-6">
-                                    <Search className="h-5 w-5" />
+                                    <Search className="h-5 w-5 text-white" />
                                 </PrimaryButton>
                             </div>
                         </div>

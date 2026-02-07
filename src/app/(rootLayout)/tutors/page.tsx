@@ -1,3 +1,4 @@
+import { PaginationControl } from "@/components/global/PaginationControl"
 import { TutorCard } from "@/components/modules/tutor/TutorCard"
 import TutorFilters from "@/components/modules/tutor/TutorFilters"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -9,8 +10,29 @@ import { Tutor } from "@/types"
 
 
 
-export default async function TutorsPage() {
-    const { data, error } = await tutorServices.getTutors()
+export default async function TutorsPage(
+    { searchParams }: {
+        searchParams:
+        Promise<{
+            page: number;
+            limit?: number;
+            search?: string;
+            sortBy?: string;
+            sortOrder?: string;
+            experience?: number
+        }>
+    }) {
+    const { page, limit, search, sortBy, sortOrder, experience } = await searchParams;
+
+
+    const { data, error } = await tutorServices.getTutors({
+        page,
+        limit,
+        search,
+        sortBy,
+        sortOrder,
+        experience
+    })
 
     if (error) {
         return (
@@ -20,6 +42,7 @@ export default async function TutorsPage() {
         )
     }
 
+    console.log(data, 'data')
 
 
     return (
@@ -58,6 +81,11 @@ export default async function TutorsPage() {
                                 ))}
                             </div>
                         </section>
+
+
+                        {/* Pagination control */}
+                        {data.meta.totalPages > 1 && data.meta.total > 0 && data.meta.limit > 0 &&
+                            <PaginationControl meta={data.meta}></PaginationControl>}
 
                     </div>
                 </main>
