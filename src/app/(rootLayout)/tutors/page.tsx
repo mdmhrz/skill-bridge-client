@@ -6,8 +6,6 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import tutorServices from "@/services/tutor.service"
 import { Tutor } from "@/types"
-// import { div } from "framer-motion/client"
-
 
 
 
@@ -52,16 +50,8 @@ export default async function TutorsPage(
 
             <div className="flex gap-6 h-[calc(100vh-84px)]">
                 {/* Sidebar */}
-                <aside className="hidden md:flex w-72 flex-col border-r bg-accent rounded-lg">
-                    <div className="p-4">
-                        <h2 className="text-lg font-semibold">Filters</h2>
-                    </div>
-
-                    <Separator />
-
-                    <ScrollArea className="flex-1 p-4">
-                        <TutorFilters />
-                    </ScrollArea>
+                <aside className="hidden md:flex w-72 pb-6">
+                    <TutorFilters />
                 </aside>
 
                 {/* Main content */}
@@ -90,9 +80,7 @@ export default async function TutorsPage(
                                     className="h-full"
                                 />
                             )}
-
                         </section>
-
 
                         {/* Pagination control */}
                         {data.meta.totalPages > 1 && data.meta.total > 0 && data.meta.limit > 0 &&
