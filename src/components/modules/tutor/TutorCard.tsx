@@ -17,7 +17,7 @@ interface TutorCardProps {
 
 export function TutorCard({ tutor }: TutorCardProps) {
     return (
-        <Card className="flex flex-col">
+        <Card className="flex flex-col rounded-none">
             <CardHeader>
                 <CardTitle className="text-lg">
                     {tutor.user.name}
@@ -51,7 +51,7 @@ export function TutorCard({ tutor }: TutorCardProps) {
             </CardContent>
 
             <CardFooter className="mt-auto">
-                <Button asChild className="w-full">
+                <Button asChild className="w-full rounded-none">
                     <Link href={`/tutors/${tutor.id}`}>
                         View Profile
                     </Link>
