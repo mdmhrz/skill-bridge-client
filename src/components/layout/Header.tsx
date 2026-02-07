@@ -9,6 +9,7 @@ import { authClient } from '@/lib/authClient';
 import PrimaryButton from '../ButtonPrimary';
 import LogoutButton from '../modules/auth/LogoutButton';
 import { AuthUser } from '@/types';
+import { userService } from '@/services/user.service';
 
 interface NavItem {
   name: string;
@@ -33,6 +34,24 @@ export default function Header({ user }: { user: AuthUser | null }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
   const [themeFromStorage, setThemeFromStorage] = useState<string>('light');
+
+  console.log("User data found", user)
+
+  // bypass try from client component
+
+  // const [sessionUser, setSessionUser] = useState<AuthUser | null>(null);
+  // useEffect(() => {
+  //   const fetchSession = async () => {
+  //     try {
+  //       const session = await authClient.getSession();
+  //       setSessionUser(session.user);
+  //     } catch (error) {
+  //       console.error('Error fetching session:', error);
+  //     }
+  //   };
+  //   fetchSession();
+  // })
+
 
   // read theme from localStorage
   useEffect(() => {

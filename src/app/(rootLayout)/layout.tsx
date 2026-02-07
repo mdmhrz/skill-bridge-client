@@ -4,6 +4,7 @@ import React from 'react';
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
     const user = await userService.getSession();
+    console.log(user,"user from layout");
 
     return (
         <div>
