@@ -37,20 +37,7 @@ export default function Header({ user }: { user: AuthUser | null }) {
 
   console.log("User data found", user)
 
-  // bypass try from client component
 
-  // const [sessionUser, setSessionUser] = useState<AuthUser | null>(null);
-  // useEffect(() => {
-  //   const fetchSession = async () => {
-  //     try {
-  //       const session = await authClient.getSession();
-  //       setSessionUser(session.user);
-  //     } catch (error) {
-  //       console.error('Error fetching session:', error);
-  //     }
-  //   };
-  //   fetchSession();
-  // })
 
 
   // read theme from localStorage
@@ -220,7 +207,7 @@ export default function Header({ user }: { user: AuthUser | null }) {
 
                   <>
                     {user ? (
-                      <LogoutButton></LogoutButton>
+                      <LogoutButton className='w-full mb-4' ></LogoutButton>
                     ) :
                       <Link
                         prefetch={false}
