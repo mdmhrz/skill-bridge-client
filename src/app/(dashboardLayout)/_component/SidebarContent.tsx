@@ -26,6 +26,7 @@ import tutorRoutes from '@/routes/tutor.routes';
 import adminRoutes from '@/routes/admin.routes';
 import { NavigationItem } from '@/types/userRoute.type';
 import { AuthUser } from '@/types';
+import { getInitials } from '@/lib/utils/geInitials';
 
 
 
@@ -61,15 +62,6 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
             break;
     }
 
-
-    const getInitials = (name: string) => {
-        return name
-            .split(' ')
-            .map(n => n[0])
-            .join('')
-            .toUpperCase()
-            .slice(0, 2);
-    };
 
     return (
         <div className="flex h-full flex-col">

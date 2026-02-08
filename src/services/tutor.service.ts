@@ -1,5 +1,5 @@
 import { env } from "@/env";
-import { Tutor } from "@/types";
+import { Tutor } from "@/types/tutorDetails.type";
 interface TutorResponse<T> {
     data: T | null;
     error: { message: string } | null;
