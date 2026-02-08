@@ -51,7 +51,7 @@ export default async function TutorDetailsPage({ params }: { params: Promise<{ i
         const tutor: Tutor = response.data
 
         return (
-            <div className="container mx-auto px-6 py-8 max-w-7xl">
+            <div className="container mx-auto px-6 py-8 ">
                 {/* Hero Section */}
                 <div className="bg-gradient-to-br from-background via-background to-muted/30 border rounded-xl shadow-sm p-6 mb-8">
                     <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
@@ -78,7 +78,7 @@ export default async function TutorDetailsPage({ params }: { params: Promise<{ i
                                     <h1 className="text-3xl font-bold tracking-tight">
                                         {tutor?.user?.name || "Tutor Name"}
                                     </h1>
-                                    <Badge variant="outline" className="text-base px-4 py-1">
+                                    <Badge className="text-base px-4 py-1">
                                         ${tutor?.hourlyRate || "0"}/hr
                                     </Badge>
                                 </div>
