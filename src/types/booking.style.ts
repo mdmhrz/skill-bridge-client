@@ -1,6 +1,6 @@
 export interface BookingData {
     tutorProfileId: string,
-    scheduleDate: string, //scheduleDate
+    scheduledDate: string, //scheduleDate
     duration: number,
     totalPrice: string,
     categoryId: string

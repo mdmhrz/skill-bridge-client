@@ -8,6 +8,9 @@ export const bookingService = {
     createBooking: async (bookingData: BookingData) => {
         try {
             const cookieStore = await cookies();
+            // console.log('Making booking request to:', `${API_URL}/api/booking`)
+            // console.log('Booking data:', bookingData)
+            
             const res = await fetch(`${API_URL}/api/booking`, {
                 method: "POST",
                 headers: {
@@ -17,12 +20,17 @@ export const bookingService = {
                 body: JSON.stringify(bookingData)
             })
 
-            const data = await res.json()
+            // console.log('Response status:', res.status)
+            // console.log('Response ok:', res.ok)
 
-            if (data.error) {
+            const data = await res.json()
+            console.log('Response data:', data)
+
+            if (!res.ok || data.error) {
                 return {
-                    data: null, error: {
-                        message: data.error || "Error creating booking"
+                    data: null, 
+                    error: {
+                        message: data.error || data.message || `HTTP ${res.status}: Error creating booking`
                     }
                 }
             }
@@ -33,6 +41,7 @@ export const bookingService = {
             }
 
         } catch (error) {
+            console.error('Booking service error:', error)
             return {
                 data: null,
                 error: { message: 'Error creating booking' }

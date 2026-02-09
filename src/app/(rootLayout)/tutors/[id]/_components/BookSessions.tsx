@@ -40,8 +40,8 @@ import { createBooking } from '@/actions/booking.action'
 // Zod validation schema
 const bookingSchema = z.object({
     tutorProfileId: z.string().min(1, "Tutor profile is required"),
-    scheduleDate: z.date({
-        required_error: "Please select a date and time",
+    scheduledDate: z.date().refine((date) => date !== undefined && date !== null, {
+        message: "Please select a date and time"
     }),
     duration: z.number().min(30, "Minimum duration is 30 minutes").max(120, "Maximum duration is 2 hours"),
     totalPrice: z.string().min(1, "Price calculation error"),
@@ -69,7 +69,6 @@ const generateTimeSlots = (startTime: string, endTime: string) => {
         slots.push(format(current, 'HH:mm'))
         current = addDays(setMinutes(current, current.getMinutes() + 30), 0)
     }
-
     return slots
 }
 
@@ -157,68 +156,51 @@ const BookSessions = ({ tutor, user }: { tutor: Tutor; user: AuthUser }) => {
             return
         }
 
-
         const toastId = toast.loading("Creating Booking...")
 
         try {
-
-
-            // Combine date and time
+            // Combine date + time (local)
             const [hours, minutes] = selectedTime.split(':').map(Number)
-            const scheduleDateTime = setMinutes(setHours(selectedDate!, hours), minutes)
+            const localDateTime = setMinutes(setHours(selectedDate!, hours), minutes)
 
-            // Prepare payload
-            const payload: BookingFormData = {
+            // Convert LOCAL → UTC manually
+            const utcDate = new Date(
+                localDateTime.getTime() - localDateTime.getTimezoneOffset() * 60 * 1000
+            )
+
+            // Final payload (server-ready)
+            const finalPayload = {
                 tutorProfileId: tutor.id,
-                scheduleDate: scheduleDateTime,
+                scheduledDate: utcDate.toISOString(),
                 duration: selectedDuration,
-                totalPrice: totalPrice,
+                totalPrice,
                 categoryId: selectedCategory,
             }
 
-            // Validate with Zod
-            const validatedData = bookingSchema.parse(payload)
-            const finalPaylod = {
-                ...validatedData,
-                scheduleDate: validatedData.scheduleDate.toISOString()
-            }
+            console.log(finalPayload)
 
             setIsLoading(true)
 
-            const res = await createBooking(finalPaylod)
-            if (res.error) {
-                toast.error(res.error.message || "Booking creation failed. Please try again")
+            const res = await createBooking(finalPayload)
+            console.log('API Response:', res) // Debug log
+
+            if (!res || res.error) {
+                toast.error(res?.error?.message || "Booking failed", { id: toastId })
+                return
+            }
+
+            if (!res.data) {
+                toast.error("No data received from server", { id: toastId })
+                return
             }
 
             toast.success("Booking Created Successfully", {
-                description: `Your session is scheduled for ${format(
-                    scheduleDateTime,
+                description: `Your session is scheduledd for ${format(
+                    utcDate,
                     "PPP"
                 )} at ${selectedTime}`,
                 id: toastId,
             })
-
-            // Make API call (replace with your actual API endpoint)
-            // const response = await fetch('/api/bookings', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify({
-            //         ...validatedData,
-            //         scheduleDate: validatedData.scheduleDate.toISOString(),
-            //     }),
-            // })
-
-            // const data = await response.json()
-
-            // if (!response.ok) {
-            //     throw new Error(data.message || 'Booking failed')
-            // }
-
-            // toast.success("Session booked successfully!", {
-            //     description: `Your session is scheduled for ${format(scheduleDateTime, 'PPP')} at ${selectedTime}`,
-            // })
 
             setOpen(false)
             resetForm()
