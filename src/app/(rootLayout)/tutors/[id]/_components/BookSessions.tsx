@@ -182,7 +182,7 @@ const BookSessions = ({ tutor, user }: { tutor: Tutor; user: AuthUser }) => {
             setIsLoading(true)
 
             const res = await createBooking(finalPayload)
-            console.log('API Response:', res) // Debug log
+            // console.log('API Response:', res)
 
             if (!res || res.error) {
                 toast.error(res?.error?.message || "Booking failed", { id: toastId })

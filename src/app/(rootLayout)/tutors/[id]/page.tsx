@@ -39,6 +39,8 @@ import { getInitials } from "@/lib/utils/geInitials"
 import { Tutor, TutorCategoryRelation } from "@/types/tutorDetails.type"
 import BookSessions from "./_components/BookSessions"
 import { userService } from "@/services/user.service"
+import Review from "./_components/Review"
+import { Roles } from "@/constants/role"
 
 export default async function TutorDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
@@ -154,13 +156,10 @@ export default async function TutorDetailsPage({ params }: { params: Promise<{ i
                             </div>
                         )}
 
-                        {/* Contact CTA */}
+                        {/* Booking CTA */}
                         <div className="flex flex-wrap gap-3 pt-4">
                             <BookSessions user={data?.user} tutor={tutor}></BookSessions>
-                            <Button variant="outline" size="lg">
-                                <MessageSquare className="mr-2 h-5 w-5" />
-                                Message
-                            </Button>
+
                         </div>
                     </div>
                 </div>
@@ -281,10 +280,6 @@ export default async function TutorDetailsPage({ params }: { params: Promise<{ i
                                     <p className="text-xs text-muted-foreground">Availability Slots</p>
                                 </div>
                             </div>
-                            <Button className="w-full" size="lg">
-                                <Calendar className="mr-2 h-5 w-5" />
-                                View Full Schedule
-                            </Button>
                         </CardContent>
                     </Card>
                 </div>
@@ -357,31 +352,39 @@ export default async function TutorDetailsPage({ params }: { params: Promise<{ i
                     </Card>
 
                     {/* Availability */}
-                    <Card>
+                    <Card className="bg-background shadow-lg border border-border rounded-2xl">
                         <CardHeader>
-                            <CardTitle className="text-xl flex items-center gap-2">
-                                <Clock3 className="h-6 w-6" />
-                                Availability
+                            <CardTitle className="text-2xl flex items-center gap-2">
+                                <Clock3 className="h-6 w-6 text-primary" />
+                                Available Sessions
                             </CardTitle>
-                            <CardDescription>
+                            <CardDescription className="text-sm text-muted-foreground">
                                 Regular weekly availability for sessions
                             </CardDescription>
                         </CardHeader>
-                        <CardContent>
-                            {tutor?.availability && tutor.availability.length > 0 ? (
-                                <div className="space-y-3">
+
+                        <CardContent className="space-y-4">
+                            {tutor?.availability && tutor?.availability?.length > 0 ? (
+                                <div className={`${tutor?.availability?.length > 1 ? "grid gap-4 md:grid-cols-2" : "grid gap-4"}`}>
                                     {tutor.availability.map((slot, index) => (
                                         <div
                                             key={slot.id || index}
-                                            className="flex items-center justify-between p-3 rounded-lg border"
+                                            className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 p-4 border border-border rounded-xl shadow-sm hover:shadow-md transition-all bg-gradient-to-br from-primary/5 to-background"
                                         >
+                                            {/* Slot info */}
                                             <div>
-                                                <p className="font-medium">{slot.dayOfWeek}</p>
+                                                <p className="font-semibold text-lg">{slot.dayOfWeek}</p>
                                                 <p className="text-sm text-muted-foreground">
                                                     {slot.startTime} - {slot.endTime}
                                                 </p>
                                             </div>
-                                            <Badge variant="outline">Available</Badge>
+
+                                            {/* Conditionally show Review button */}
+                                            {data?.user?.role === Roles.student && (
+                                                <div className="mt-2 md:mt-0">
+                                                    <Review tutorId={tutor.id} categoryId={slot.id} />
+                                                </div>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
@@ -393,6 +396,8 @@ export default async function TutorDetailsPage({ params }: { params: Promise<{ i
                             )}
                         </CardContent>
                     </Card>
+
+
 
                     {/* Reviews Section */}
                     <Card>
