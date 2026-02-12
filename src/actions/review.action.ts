@@ -2,7 +2,7 @@
 
 import { reviewService } from "@/services/review.service";
 import { reviewPayload } from "@/types"
-import { revalidateTag, updateTag } from "next/cache";
+import {  updateTag } from "next/cache";
 
 export const createReview = async (reviewData: reviewPayload) => {
     const res = await reviewService.createBooking(reviewData)

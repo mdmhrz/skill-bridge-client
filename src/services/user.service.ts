@@ -1,7 +1,10 @@
 import { env } from "@/env";
+import { serverFetch } from "@/lib/serverFetch";
 import { cookies } from "next/headers";
 
+
 const AUTH_URL = env.AUTH_URL;
+const BACKEND_BASE_URL = env.BACKEND_BASE_URL
 
 export const userService = {
     getSession: async function () {
@@ -27,6 +30,24 @@ export const userService = {
         } catch (error) {
             console.error('Error fetching session:', error);
             return { data: null, error: { message: 'Error fetching session' } };
+        }
+    },
+
+    getUserDetailsById: async function (id: string) {
+        if (!id) {
+            return {
+                userData: null,
+                error: { message: "User ID is required" }
+            }
+        }
+
+        const { data, error } = await serverFetch(
+            `${BACKEND_BASE_URL}/api/users/${id}`
+        )
+
+        return {
+            userData: data,
+            error,
         }
     }
 }
