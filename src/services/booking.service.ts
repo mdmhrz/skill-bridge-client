@@ -1,4 +1,5 @@
 import { env } from "@/env";
+import { serverFetch } from "@/lib/serverFetch";
 import { BookingData } from "@/types";
 import { cookies } from "next/headers"
 
@@ -10,7 +11,7 @@ export const bookingService = {
             const cookieStore = await cookies();
             // console.log('Making booking request to:', `${API_URL}/api/booking`)
             // console.log('Booking data:', bookingData)
-            
+
             const res = await fetch(`${API_URL}/api/booking`, {
                 method: "POST",
                 headers: {
@@ -28,7 +29,7 @@ export const bookingService = {
 
             if (!res.ok || data.error) {
                 return {
-                    data: null, 
+                    data: null,
                     error: {
                         message: data.error || data.message || `HTTP ${res.status}: Error creating booking`
                     }
@@ -46,6 +47,17 @@ export const bookingService = {
                 data: null,
                 error: { message: 'Error creating booking' }
             };
+        }
+    },
+
+    getMyBookings: async function () {
+        const { data, error } = await serverFetch(
+            `${API_URL}/api/booking`
+        )
+
+        return {
+            bookingData: data,
+            error,
         }
     }
 }
