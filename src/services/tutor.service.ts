@@ -1,5 +1,5 @@
 import { env } from "@/env";
-import { Tutor } from "@/types";
+import { Tutor } from "@/types/tutorDetails.type";
 interface TutorResponse<T> {
     data: T | null;
     error: { message: string } | null;
@@ -46,7 +46,9 @@ const tutorServices = {
 
     getTutorById: async (id: string): Promise<TutorResponse<Tutor>> => {
         try {
-            const res = await fetch(`${API_URL}/api/tutor/${id}`);
+            const res = await fetch(`${API_URL}/api/tutor/${id}`, {
+                next: { tags: [`tutor-${id}`] }
+            });
             const data = await res.json();
             return { data: data.data, error: null };
         } catch (error) {

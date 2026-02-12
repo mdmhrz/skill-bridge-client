@@ -23,6 +23,7 @@ import { userService } from '@/services/user.service';
 import { Roles } from '@/constants/role';
 import LogoutButton from '@/components/modules/auth/LogoutButton';
 import LogoutComponent from './_component/LogoutComponent';
+import { getInitials } from '@/lib/utils/geInitials';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,14 +41,6 @@ const DashboardLayout = async ({ children, admin, student, tutor }: DashboardLay
 
     const user = data.user
 
-    const getInitials = (name: string) => {
-        return name
-            .split(' ')
-            .map(n => n[0])
-            .join('')
-            .toUpperCase()
-            .slice(0, 2);
-    };
 
     return (
         <div className="flex h-screen overflow-hidden bg-background">
