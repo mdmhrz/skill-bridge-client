@@ -5,20 +5,20 @@ import {
     User,
 } from "lucide-react";
 
- const tutorRoutes: NavigationItem[] = [
+const tutorRoutes: NavigationItem[] = [
     {
         name: "Dashboard",
-        href: "/dashboard/tutor-dashboard",
+        href: "/tutor-dashboard",
         icon: LayoutDashboard,
     },
     {
         name: "Availability",
-        href: "/dashboard/availability",
+        href: "/tutor-dashboard/availability",
         icon: CalendarClock,
     },
     {
         name: "Profile",
-        href: "/dashboard/profile",
+        href: "/tutor-dashboard/profile",
         icon: User,
     },
 ];

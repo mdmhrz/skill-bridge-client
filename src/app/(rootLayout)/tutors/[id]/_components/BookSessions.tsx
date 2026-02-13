@@ -177,7 +177,7 @@ const BookSessions = ({ tutor, user }: { tutor: Tutor; user: AuthUser }) => {
                 categoryId: selectedCategory,
             }
 
-            console.log(finalPayload)
+            // console.log(finalPayload)
 
             setIsLoading(true)
 

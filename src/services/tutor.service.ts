@@ -1,4 +1,5 @@
 import { env } from "@/env";
+import { serverFetch } from "@/lib/serverFetch";
 import { Tutor } from "@/types/tutorDetails.type";
 interface TutorResponse<T> {
     data: T | null;
@@ -52,9 +53,21 @@ const tutorServices = {
             const data = await res.json();
             return { data: data.data, error: null };
         } catch (error) {
-            return { data: null, error: { message: 'Error fetching blog post by ID' } };
+            return { data: null, error: { message: 'Error fetching tutor profile by ID' } };
         }
     },
+
+    getTutorProfile: async function () {
+        const { data, error } = await serverFetch(
+            `${API_URL}/api/tutor/my-profile`
+        )
+        return {
+            data,
+            error,
+        }
+    }
+
+
 
 };
 
