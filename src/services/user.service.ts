@@ -1,6 +1,7 @@
 import { env } from "@/env";
 import { serverFetch } from "@/lib/serverFetch";
 import { cookies } from "next/headers";
+import { StudentUser } from "@/types";
 
 
 const AUTH_URL = env.AUTH_URL;
@@ -33,7 +34,7 @@ export const userService = {
         }
     },
 
-    getUserDetailsById: async function (id: string) {
+    getUserDetailsById: async function (id: string): Promise<{ userData: StudentUser | null; error: { message: string } | null }> {
         if (!id) {
             return {
                 userData: null,
