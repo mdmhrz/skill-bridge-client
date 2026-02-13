@@ -23,13 +23,15 @@ import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { createAvailability } from '@/actions/availability.action';
 
-const CreateAvailabilityModal = () => {
+const CreateAvailabilityModal = (tutorProfileId: any) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     const [formData, setFormData] = useState({
+        ...tutorProfileId,
         dayOfWeek: '',
         startTime: '',
         endTime: '',
@@ -63,15 +65,26 @@ const CreateAvailabilityModal = () => {
         setLoading(true);
 
         try {
-            // TODO: Replace with your actual API call
-            // const response = await tutorServices.createAvailability(formData);
+            const toastId = toast.loading("Updating availability...")
+            console.log(formData, 'before submit')
+            const res = await createAvailability(formData)
+            // console.log(res)
 
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
 
-            toast.success('Availability added successfully!');
+            if (!res || res.error) {
+                toast.error(res?.error?.message || "Creating availabili failed", { id: toastId })
+                return
+            }
+
+            if (!res.data) {
+                toast.error("No response receivend from server", { id: toastId })
+                return
+            }
+
+            toast.success("Availability Created Successfully", { id: toastId })
+
             setOpen(false);
-            setFormData({ dayOfWeek: '', startTime: '', endTime: '' });
+            setFormData({ dayOfWeek: '', startTime: '', endTime: '', tutorProfileId });
             router.refresh();
         } catch (error) {
             toast.error('Failed to add availability');

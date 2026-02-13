@@ -58,7 +58,7 @@ const AvailabilityPage = async () => {
                         Manage your teaching schedule and available time slots
                     </p>
                 </div>
-                <CreateAvailabilityModal />
+                <CreateAvailabilityModal tutorProfileId={tutor.id} />
             </div>
 
             {/* Summary Card */}

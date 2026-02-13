@@ -14,6 +14,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { deleteAvailability } from '@/actions/availability.action';
 
 interface AvailabilitySlot {
     id: string;
@@ -40,13 +41,23 @@ const DeleteAvailabilityModal = ({ open, onOpenChange, slot }: DeleteAvailabilit
         setLoading(true);
 
         try {
-            // TODO: Replace with your actual API call
-            // const response = await tutorServices.deleteAvailability(slot.id);
+            const toastId = toast.loading("Updating availability...")
 
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            const res = await deleteAvailability(slot.id)
+            // console.log(res)
 
-            toast.success('Availability deleted successfully!');
+
+            if (!res || res.error) {
+                toast.error(res?.error?.message || "Deleting availability failed", { id: toastId })
+                return
+            }
+
+            if (!res.data) {
+                toast.error("No response receivend from server", { id: toastId })
+                return
+            }
+
+            toast.success("Availability Deleted Successfully", { id: toastId })
             onOpenChange(false);
             router.refresh();
         } catch (error) {

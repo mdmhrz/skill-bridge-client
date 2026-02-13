@@ -10,7 +10,26 @@ export interface AvailabilityPaylod {
     endTime: string
 }
 
+export interface CreateAvailability extends AvailabilityPaylod {
+    tutorProfileId: string;
+}
+
 export const availabilityService = {
+
+    createAvailability: async ({ payload }: { payload: CreateAvailability }) => {
+        const { data, error } = await serverFetch(`${API_URL}/api/availability`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(payload)
+        })
+
+        return { data, error };
+    },
+
+
+
     updateAvailability: async ({ id, payload }: { id: string, payload: AvailabilityPaylod }) => {
         const { data, error } = await serverFetch(`${API_URL}/api/availability/${id}`, {
             method: "PUT",
@@ -21,6 +40,16 @@ export const availabilityService = {
         })
 
         return { data, error };
-    }
+    },
+
+
+    deleteAvailability: async (id: string) => {
+        const { data, error } = await serverFetch(`${API_URL}/api/availability/${id}`, {
+            method: "DELETE"
+        })
+
+        return { data, error };
+    },
+
 
 }
