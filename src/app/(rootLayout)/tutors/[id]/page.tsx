@@ -159,10 +159,11 @@ export default async function TutorDetailsPage({ params }: { params: Promise<{ i
                             )}
 
                             {/* Booking CTA */}
-                            <div className="flex flex-wrap gap-3 pt-4">
-                                <BookSessions user={data?.user} tutor={tutor}></BookSessions>
-
-                            </div>
+                            {tutor?.availability?.length > 0 &&
+                                <div className="flex flex-wrap gap-3 pt-4">
+                                    <BookSessions user={data?.user} tutor={tutor}></BookSessions>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

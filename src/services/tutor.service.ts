@@ -15,6 +15,16 @@ interface GetTutorsParams {
     experience?: number
 }
 
+export type TutorProfile = {
+    bio: string;
+    title: string;
+    experience: number;      // years
+    hourlyRate: number;
+    languages: string[];
+    education: string;
+    categories: number[];    // category IDs
+};
+
 
 const API_URL = env.BACKEND_BASE_URL
 
@@ -64,6 +74,24 @@ const tutorServices = {
         return {
             data,
             error,
+        }
+    },
+
+    createTutor: async (payload: CreateTutor) => {
+        const { data, error } = await serverFetch(
+            `${API_URL}/api/tutor`,
+            {
+                method: "POST",
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }
+        )
+
+        return {
+            data,
+            error
         }
     }
 
