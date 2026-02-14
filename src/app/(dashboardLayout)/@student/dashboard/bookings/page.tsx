@@ -3,78 +3,14 @@ import { bookingService } from '@/services/booking.service'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { getInitials } from '@/lib/utils/geInitials'
-import { Skeleton } from '@/components/ui/skeleton'
 import { IconInbox } from '@tabler/icons-react'
+import { TableGenerator } from '@/components/global/TableGenerator'
+import PrimaryButton from '@/components/ButtonPrimary'
 
 
 export const dynamic = 'force-dynamic'
 
-// Reusable TableGenerator with loading & empty states
-interface TableGeneratorProps<T> {
-    columns: { header: string; accessor: (row: T) => React.ReactNode }[]
-    data: T[] | null
-    isLoading?: boolean
-    emptyMessage?: string
-}
-
-export const TableGenerator = <T,>({ columns, data, isLoading, emptyMessage }: TableGeneratorProps<T>) => {
-    if (isLoading) {
-        return (
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        {columns.map((col, idx) => (
-                            <TableHead key={idx}>{col.header}</TableHead>
-                        ))}
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {Array.from({ length: 5 }).map((_, rowIdx) => (
-                        <TableRow key={rowIdx}>
-                            {columns.map((_, colIdx) => (
-                                <TableCell key={colIdx}>
-                                    <Skeleton className="h-4 w-full rounded-md" />
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        )
-    }
-
-    if (!data || data.length === 0) {
-        return (
-            <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
-                <IconInbox className="text-4xl mb-4" />
-                <p>{emptyMessage || 'No data available'}</p>
-            </div>
-        )
-    }
-
-    return (
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    {columns.map((col, idx) => (
-                        <TableHead key={idx}>{col.header}</TableHead>
-                    ))}
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {data.map((row, idx) => (
-                    <TableRow key={idx}>
-                        {columns.map((col, cidx) => (
-                            <TableCell key={cidx}>{col.accessor(row)}</TableCell>
-                        ))}
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-    )
-}
 
 const StudentBookings = async () => {
     // Fetch bookings
@@ -142,7 +78,7 @@ const StudentBookings = async () => {
             accessor: (row: any) => (
                 <div className="flex gap-2">
                     <Button size="sm" variant="outline">View</Button>
-                    {row.status === 'CONFIRMED' && <Button size="sm" variant="destructive">Cancel</Button>}
+                    {row.status === 'CONFIRMED' && <PrimaryButton className='text-white' size="sm">Cancel</PrimaryButton>}
                 </div>
             ),
         },

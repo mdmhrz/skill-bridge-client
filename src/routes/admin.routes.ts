@@ -10,7 +10,7 @@ import {
 const adminRoutes: NavigationItem[] = [
     {
         name: "Dashboard",
-        href: "/admin-dashboard/admin-dashboard",
+        href: "/admin-dashboard",
         icon: LayoutDashboard,
     },
     {

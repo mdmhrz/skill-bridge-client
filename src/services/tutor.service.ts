@@ -18,11 +18,11 @@ interface GetTutorsParams {
 export type TutorProfile = {
     bio: string;
     title: string;
-    experience: number;      // years
+    experience: number;
     hourlyRate: number;
     languages: string[];
     education: string;
-    categories: number[];    // category IDs
+    categories: number[];
 };
 
 
@@ -77,7 +77,7 @@ const tutorServices = {
         }
     },
 
-    createTutor: async (payload: CreateTutor) => {
+    createTutor: async (payload: TutorProfile) => {
         const { data, error } = await serverFetch(
             `${API_URL}/api/tutor`,
             {

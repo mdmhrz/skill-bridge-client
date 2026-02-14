@@ -1,8 +1,8 @@
 'use server'
-import tutorServices, { CreateTutor } from "@/services/tutor.service"
+import tutorServices, { TutorProfile } from "@/services/tutor.service"
 
 
-export const createTutor = async (payload: CreateTutor) => {
+export const createTutor = async (payload: TutorProfile) => {
     const res = await tutorServices.createTutor(payload)
     return res;
 }

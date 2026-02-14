@@ -17,10 +17,10 @@ const PrimaryButton = React.forwardRef<HTMLButtonElement, PrimaryButtonProps>(
             <Button
                 ref={ref}
                 className={cn(
-                    "bg-gradient-to-br from-rose-500 to-rose-700 hover:from-rose-600 hover:to-rose-800 border-0 text-background",
+                    "bg-gradient-to-br from-rose-500 to-rose-700 hover:from-rose-600 hover:to-rose-800 border-0 text-background cursor-pointer",
                     className
                 )}
-                variant={variant || undefined} // Don't pass variant if not specified
+                variant={variant || undefined}
                 size={size}
                 asChild={asChild}
                 {...props}

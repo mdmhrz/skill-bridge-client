@@ -20,6 +20,7 @@ import {
     Sparkles,
 } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Roles } from '@/constants/role';
 import studentRoutes from '@/routes/student.routes';
 import tutorRoutes from '@/routes/tutor.routes';
@@ -27,8 +28,6 @@ import adminRoutes from '@/routes/admin.routes';
 import { NavigationItem } from '@/types/userRoute.type';
 import { AuthUser } from '@/types';
 import { getInitials } from '@/lib/utils/geInitials';
-
-
 
 interface SidebarContentProps {
     mobile?: boolean;
@@ -41,9 +40,10 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     collapsed = false,
     user
 }) => {
+    const pathname = usePathname();
+
     // Navigation items
     const navigationItems: NavigationItem[] = [];
-
 
     switch (user.role) {
         case Roles.student:
@@ -61,7 +61,6 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
         default:
             break;
     }
-
 
     return (
         <div className="flex h-full flex-col">
@@ -87,44 +86,53 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
 
             {/* Navigation */}
             <nav className="flex-1 space-y-1 px-3 py-4 overflow-y-auto">
-                {navigationItems.map((item) => (
-                    <a
-                        key={item.name}
-                        href={item.href}
-                        className={cn(
-                            "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all hover:bg-accent hover:text-accent-foreground",
-                            "text-muted-foreground",
-                            collapsed && !mobile && "justify-center"
-                        )}
-                    >
-                        <item.icon className="h-5 w-5 flex-shrink-0" />
-                        {(!collapsed || mobile) && (
-                            <>
-                                <span className="flex-1">{item.name}</span>
-                                {item.badge && (
-                                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
-                                        {item.badge}
-                                    </span>
-                                )}
-                            </>
-                        )}
-                    </a>
-                ))}
+                {navigationItems.map((item) => {
+                    const isActive = pathname === item.href;
+
+                    return (
+                        <Link
+                            key={item.name}
+                            href={item.href}
+                            className={cn(
+                                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all hover:bg-accent hover:text-accent-foreground",
+                                isActive
+                                    ? "bg-accent text-accent-foreground"
+                                    : "text-muted-foreground",
+                                collapsed && !mobile && "justify-center"
+                            )}
+                        >
+                            <item.icon className="h-5 w-5 flex-shrink-0" />
+                            {(!collapsed || mobile) && (
+                                <>
+                                    <span className="flex-1">{item.name}</span>
+                                    {item.badge && (
+                                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
+                                            {item.badge}
+                                        </span>
+                                    )}
+                                </>
+                            )}
+                        </Link>
+                    );
+                })}
             </nav>
 
             {/* Bottom Section - Settings & User */}
             <div className="border-t p-3 space-y-2">
                 {/* Settings Button */}
-                <a
+                <Link
                     href="/settings"
                     className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all hover:bg-accent hover:text-accent-foreground text-muted-foreground",
+                        "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all hover:bg-accent hover:text-accent-foreground",
+                        pathname === "/settings"
+                            ? "bg-accent text-accent-foreground"
+                            : "text-muted-foreground",
                         collapsed && !mobile && "justify-center"
                     )}
                 >
                     <Settings className="h-5 w-5 flex-shrink-0" />
                     {(!collapsed || mobile) && <span>Settings</span>}
-                </a>
+                </Link>
 
                 {/* User Profile Dropdown */}
                 <DropdownMenu>
