@@ -11,7 +11,7 @@ const SocialLogin = () => {
             provider: "google",
             callbackURL: "https://skill-bridge-client-server.vercel.app",
         });
-        // console.log("Google login response:", data);
+        // console.log("Google login response:", data)
     };
 
     return (
