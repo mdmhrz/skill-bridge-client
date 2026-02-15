@@ -9,7 +9,7 @@ const SocialLogin = () => {
     const handleGoogleLogin = async () => {
         const data = await authClient.signIn.social({
             provider: "google",
-            callbackURL: env.NEXT_PUBLIC_FRONTEND_BASE_URL,
+            callbackURL: "https://skill-bridge-client-server.vercel.app",
         });
         // console.log("Google login response:", data);
     };
