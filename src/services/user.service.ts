@@ -50,5 +50,13 @@ export const userService = {
             userData: data,
             error,
         }
+    },
+
+    getAllUsers: async () => {
+        const { data, error } = await serverFetch(`${BACKEND_BASE_URL}/api/users`)
+
+        return {
+            data, error
+        }
     }
 }

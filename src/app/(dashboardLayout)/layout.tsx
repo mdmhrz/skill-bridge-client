@@ -24,6 +24,7 @@ import { Roles } from '@/constants/role';
 import LogoutButton from '@/components/modules/auth/LogoutButton';
 import LogoutComponent from './_component/LogoutComponent';
 import { getInitials } from '@/lib/utils/geInitials';
+import BecomeATutor from './_component/BecomeATutor';
 
 export const dynamic = 'force-dynamic';
 
@@ -66,6 +67,9 @@ const DashboardLayout = async ({ children, admin, student, tutor }: DashboardLay
 
                         {/* Right Side Actions */}
                         <div className="flex items-center gap-2">
+                            {/* Become a Tutor */}
+                           {user.role === Roles.student && <BecomeATutor></BecomeATutor>}
+
                             {/* Notifications */}
                             <Button variant="ghost" size="icon" className="relative">
                                 <Bell className="h-5 w-5" />
