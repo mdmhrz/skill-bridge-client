@@ -59,5 +59,16 @@ export const bookingService = {
             bookingData: data,
             error,
         }
+    },
+
+    getAllBookings: async function () {
+        const { data, error } = await serverFetch(
+            `${API_URL}/api/booking/all`
+        )
+
+        return {
+            bookingData: data,
+            error,
+        }
     }
 }
