@@ -9,7 +9,7 @@ const SocialLogin = () => {
     const handleGoogleLogin = async () => {
         const data = await authClient.signIn.social({
             provider: "google",
-            callbackURL: "/tutors",
+            callbackURL: env.NEXT_PUBLIC_FRONTEND_URL,
         });
         // console.log("Google login response:", data)
     };
