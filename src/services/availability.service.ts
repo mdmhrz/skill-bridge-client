@@ -2,7 +2,7 @@ import { env } from "@/env";
 import { serverFetch } from "@/lib/serverFetch";
 
 
-const API_URL = env.BACKEND_BASE_URL
+const API_URL = env.BACKEND_URL
 
 export interface AvailabilityPaylod {
     dayOfWeek: string;
