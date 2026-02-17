@@ -93,7 +93,19 @@ const tutorServices = {
             data,
             error
         }
-    }
+    },
+    
+
+
+    getFeaturedTutors: async () => {
+        try {
+            const res = await fetch(`${API_URL}/api/tutor/featured`);
+            const data = await res.json();
+            return { data: data.data, error: null };
+        } catch (error) {
+            return { data: null, error: { message: 'Error fetching featured tutors' } };
+        }
+    },
 
 
 
