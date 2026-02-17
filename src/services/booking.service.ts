@@ -3,7 +3,7 @@ import { serverFetch } from "@/lib/serverFetch";
 import { BookingData } from "@/types";
 import { cookies } from "next/headers"
 
-const API_URL = env.BACKEND_BASE_URL
+const API_URL = env.BACKEND_URL
 
 export const bookingService = {
     createBooking: async (bookingData: BookingData) => {

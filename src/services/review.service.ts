@@ -2,7 +2,7 @@ import { env } from "@/env";
 import { BookingData, reviewPayload } from "@/types";
 import { cookies } from "next/headers"
 
-const API_URL = env.BACKEND_BASE_URL
+const API_URL = env.BACKEND_URL
 
 export const reviewService = {
     createBooking: async (reviewData: reviewPayload) => {

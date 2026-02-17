@@ -4,7 +4,7 @@ import { Tutor } from "@/types/tutorDetails.type";
 
 
 
-const API_URL = env.BACKEND_BASE_URL
+const API_URL = env.BACKEND_URL
 
 const categoryServices = {
 

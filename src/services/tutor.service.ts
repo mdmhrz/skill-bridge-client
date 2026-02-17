@@ -26,7 +26,7 @@ export type TutorProfile = {
 };
 
 
-const API_URL = env.BACKEND_BASE_URL
+const API_URL = env.BACKEND_URL
 
 const tutorServices = {
 
@@ -94,7 +94,7 @@ const tutorServices = {
             error
         }
     },
-    
+
 
 
     getFeaturedTutors: async () => {

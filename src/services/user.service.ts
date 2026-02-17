@@ -5,7 +5,7 @@ import { StudentUser } from "@/types";
 
 
 const AUTH_URL = env.AUTH_URL;
-const BACKEND_BASE_URL = env.BACKEND_BASE_URL
+const BACKEND_URL = env.BACKEND_URL
 
 export const userService = {
     getSession: async function () {
@@ -43,7 +43,7 @@ export const userService = {
         }
 
         const { data, error } = await serverFetch(
-            `${BACKEND_BASE_URL}/api/users/${id}`
+            `${BACKEND_URL}/api/users/${id}`
         )
 
         return {
@@ -53,7 +53,7 @@ export const userService = {
     },
 
     getAllUsers: async () => {
-        const { data, error } = await serverFetch(`${BACKEND_BASE_URL}/api/users`)
+        const { data, error } = await serverFetch(`${BACKEND_URL}/api/users`)
 
         return {
             data, error
