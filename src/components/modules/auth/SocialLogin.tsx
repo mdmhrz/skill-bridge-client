@@ -6,12 +6,9 @@ import Image from 'next/image';
 
 
 const SocialLogin = () => {
-    const handleGoogleLogin = async () => {
-        const data = await authClient.signIn.social({
-            provider: "google",
-            callbackURL: env.NEXT_PUBLIC_FRONTEND_URL,
-        });
-        // console.log("Google login response:", data)
+    const handleGoogleLogin = () => {
+        window.location.href =
+            "https://skill-bridge-backend-server.vercel.app/api/auth/sign-in/social?provider=google&callbackURL=https://skill-bridge-client-server.vercel.app";
     };
 
     return (
