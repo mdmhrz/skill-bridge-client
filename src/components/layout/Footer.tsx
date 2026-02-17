@@ -176,26 +176,7 @@ export function Footer() {
                     </div>
                 </div>
 
-                {/* Newsletter Section */}
-                <div className="border-t border-border py-8">
-                    <div className="max-w-2xl mx-auto text-center space-y-4">
-                        <h4 className="text-lg font-semibold text-foreground">Stay Updated</h4>
-                        <p className="text-sm text-muted-foreground">
-                            Subscribe to our newsletter for learning tips, new tutors, and special offers
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
-                            <Input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="flex-1"
-                            />
-                            <Button className="sm:w-auto">
-                                Subscribe
-                                <Send className="ml-2 h-4 w-4" />
-                            </Button>
-                        </div>
-                    </div>
-                </div>
+
 
                 {/* Bottom Bar */}
                 <div className="border-t border-border py-6">
