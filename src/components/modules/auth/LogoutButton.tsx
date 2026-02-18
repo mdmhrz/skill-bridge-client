@@ -18,6 +18,7 @@ import {
 
 import { authClient } from "@/lib/authClient"
 import PrimaryButton from "@/components/ButtonPrimary"
+import { toast } from "sonner"
 
 const LogoutButton = ({ className }: { className?: string }) => {
     const router = useRouter()
@@ -29,6 +30,7 @@ const LogoutButton = ({ className }: { className?: string }) => {
         await authClient.signOut({
             fetchOptions: {
                 onSuccess: () => {
+                    toast.success("Logout successful")
                     router.push("/login")
                 },
                 onError: () => {
@@ -73,3 +75,4 @@ const LogoutButton = ({ className }: { className?: string }) => {
 }
 
 export default LogoutButton
+

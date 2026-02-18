@@ -4,7 +4,7 @@ import FAQSection from "@/components/layout/Home/FAQSection";
 import FeaturedTutors from "@/components/layout/Home/FeaturedTutors";
 import HowItWorks from "@/components/layout/Home/HowItWorks";
 import TestimonialCarousel from "@/components/layout/Home/Testimonials";
-import { SkillBridgeBanner } from "@/components/layout/SkillBridgeBanner";
+import { SkillBridgeBanner } from "@/components/layout/Home/SkillBridgeBanner";
 import tutorServices from "@/services/tutor.service";
 
 export default async function Home() {

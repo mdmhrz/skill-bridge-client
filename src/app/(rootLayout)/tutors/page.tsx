@@ -48,15 +48,15 @@ export default async function TutorsPage(
         <div className="container px-6 mx-auto">
 
 
-            <div className="flex gap-6 h-[calc(100vh-84px)]">
+            <div className="flex flex-col gap-6 md:flex-row md:h-[calc(100vh-84px)]">
                 {/* Sidebar */}
-                <aside className="hidden md:flex w-72 pb-6">
+                <aside className="w-full md:flex md:w-72 md:pb-6">
                     <TutorFilters />
                 </aside>
 
                 {/* Main content */}
-                <main className="flex-1 py-6">
-                    <div className="h-full flex flex-col gap-4 container">
+                <main className="flex-1 pb-6 md:py-6">
+                    <div className="flex h-full flex-col gap-4 container">
                         <div className="mb-6">
                             <h1 className="text-2xl font-semibold">Find Tutors</h1>
                             <p className="text-muted-foreground">

@@ -226,7 +226,7 @@ const AnimatedTestimonials = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen py-24 overflow-hidden bg-background">
+    <section className="relative min-h-screen py-24 overflow-hidden bg-muted-foreground/5">
       {/* Animated background elements */}
       <motion.div
         className="absolute inset-0 opacity-20 pointer-events-none"
