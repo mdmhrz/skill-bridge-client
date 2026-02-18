@@ -1,13 +1,16 @@
 import tutorServices from '@/services/tutor.service';
+import categoryServices from '@/services/category.service';
 import { AlertCircle, Mail, Phone, Award, BookOpen, Star, Clock, Calendar, Languages, GraduationCap, CheckCircle, Shield, MapPin } from 'lucide-react';
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
+import UpdateTutorProfileModal from './_components/UpdateTutorProfileModal';
 
 const TutorProfilePage = async () => {
     const { data, error } = await tutorServices.getTutorProfile();
+    const { data: categoriesData } = await categoryServices.getCategories();
 
     if (error || !data) {
         return (
@@ -24,6 +27,7 @@ const TutorProfilePage = async () => {
 
     const tutor = data;
     const user = tutor.user;
+    const categoryOptions = categoriesData || [];
 
     // Get initials for avatar fallback
     const getInitials = (name: string) => {
@@ -305,9 +309,12 @@ const TutorProfilePage = async () => {
                     {/* Account Info */}
                     <Card>
                         <CardHeader>
-                            <CardTitle className="flex items-center gap-2 text-base">
-                                Account Details
-                            </CardTitle>
+                            <div className="flex items-center justify-between gap-2">
+                                <CardTitle className="flex items-center gap-2 text-base">
+                                    Account Details
+                                </CardTitle>
+                                <UpdateTutorProfileModal tutor={tutor} categories={categoryOptions} />
+                            </div>
                         </CardHeader>
                         <CardContent className="space-y-3">
                             <div className="flex justify-between items-center text-sm">
@@ -354,7 +361,7 @@ const TutorProfilePage = async () => {
                             {tutor.reviews.map((review: any) => (
                                 <div
                                     key={review.id}
-                                    className="p-4 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-950/20 dark:to-orange-950/20 rounded-lg border border-yellow-200 dark:border-yellow-900"
+                                    className="p-4 bg-linear-to-br from-yellow-50 to-orange-50 dark:from-yellow-950/20 dark:to-orange-950/20 rounded-lg border border-yellow-200 dark:border-yellow-900"
                                 >
                                     <div className="flex items-start gap-3">
                                         <Avatar className="h-10 w-10">

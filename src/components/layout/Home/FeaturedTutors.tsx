@@ -62,7 +62,7 @@ export default function FeaturedTutors({ tutors }: FeaturedTutorsProps) {
         }}
       />
 
-      <div className="container relative mx-auto max-w-6xl px-6">
+      <div className="container relative mx-auto px-6">
 
         {/* ── Header ── */}
         <motion.div

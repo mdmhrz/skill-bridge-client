@@ -1,5 +1,5 @@
 'use server'
-import tutorServices, { TutorProfile } from "@/services/tutor.service"
+import tutorServices, { TutorProfile, UpdateTutorProfilePayload } from "@/services/tutor.service"
 
 type TutorSearchParams = {
     page?: number
@@ -24,5 +24,10 @@ export const featuredTutors = async () => {
 
 export const searchTutors = async (params: TutorSearchParams) => {
     const res = await tutorServices.getTutors(params)
+    return res
+}
+
+export const updateTutorProfile = async (payload: UpdateTutorProfilePayload) => {
+    const res = await tutorServices.updateTutorProfile(payload)
     return res
 }

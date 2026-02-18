@@ -25,6 +25,19 @@ export type TutorProfile = {
     categories: number[];
 };
 
+export type UpdateTutorProfilePayload = {
+    bio?: string;
+    title?: string;
+    experience?: number;
+    hourlyRate?: number;
+    languages?: string[];
+    education?: string;
+    categories?: number[];
+    name?: string;
+    image?: string;
+    phone?: string;
+};
+
 
 const API_URL = env.BACKEND_URL
 
@@ -92,6 +105,24 @@ const tutorServices = {
         return {
             data,
             error
+        }
+    },
+
+    updateTutorProfile: async (payload: UpdateTutorProfilePayload) => {
+        const { data, error } = await serverFetch(
+            `${API_URL}/api/tutor`,
+            {
+                method: "PUT",
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }
+        )
+
+        return {
+            data,
+            error,
         }
     },
 

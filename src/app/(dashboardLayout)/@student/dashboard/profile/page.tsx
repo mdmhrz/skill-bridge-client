@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { CalendarDays, Mail, Phone, Shield, User, Clock, AlertCircle, CheckCircle2, XCircle } from 'lucide-react'
 import { getInitials } from '@/lib/utils/geInitials'
+import UpdateStudentProfileModal from './_components/UpdateStudentProfileModal'
 
 export default async function StudentProfilePage() {
     // Fetch session
@@ -284,9 +285,13 @@ export default async function StudentProfilePage() {
                             <Separator className="my-6" />
 
                             <div className="space-y-3">
-                                <Button className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-base shadow-lg hover:shadow-xl transition-all duration-200">
-                                    Edit Profile
-                                </Button>
+                                <UpdateStudentProfileModal
+                                    user={{
+                                        name: user.name,
+                                        phone: user.phone,
+                                        image: user.image,
+                                    }}
+                                />
                                 <Button variant="outline" className="w-full">
                                     Security Settings
                                 </Button>
