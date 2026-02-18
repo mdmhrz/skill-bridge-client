@@ -2,8 +2,7 @@ import { createAuthClient } from "better-auth/react";
 import { env } from "@/env";
 
 export const authClient = createAuthClient({
-    baseURL: typeof window !== "undefined" ? window.location.origin : "",
-    // baseURL: env.NEXT_PUBLIC_FRONTEND_URL,
+    baseURL: env.NEXT_PUBLIC_BACKEND_URL,
     basePath: "/api/auth",
     fetchOptions: {
         credentials: "include",
