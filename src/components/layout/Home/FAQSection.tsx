@@ -165,7 +165,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="relative py-24 overflow-hidden bg-muted-foreground/5">
+    <section className="relative py-24 overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <motion.div

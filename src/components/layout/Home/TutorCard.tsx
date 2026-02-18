@@ -4,14 +4,12 @@ import {
   Star,
   Clock,
   BadgeCheck,
-  BookOpen,
   ChevronRight,
   Users,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { TutorProfile } from "@/types/featured-tutors.tytpe";
 import { getInitials } from "@/lib/utils/geInitials";
 import { itemVariants } from "./FeaturedTutors";
@@ -39,110 +37,84 @@ export default function TutorCard({ tutor }: { tutor: TutorProfile }) {
         href={`/tutors/${tutor.id}`}
         className="block h-full rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        <Card className="group py-0 relative h-full rounded-2xl border bg-card overflow-hidden hover:border-primary/30 hover:shadow-lg transition-all duration-300">
+        <Card className="group h-full rounded-2xl border bg-card py-0 transition-shadow duration-200 hover:shadow-md">
+          <CardContent className="flex h-full flex-col gap-3 p-5">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex min-w-0 items-center gap-3">
+                <div className="relative shrink-0">
+                  <Avatar className="h-12 w-12 border bg-muted">
+                    <AvatarImage
+                      src={tutor.user.image ?? undefined}
+                      alt={tutor.user.name}
+                    />
+                    <AvatarFallback className="font-semibold text-sm">
+                      {initials}
+                    </AvatarFallback>
+                  </Avatar>
 
-          {/* ── Coloured left stripe ── */}
-          <div className="absolute left-0 top-0 bottom-0 w-1 bg-border group-hover:bg-primary transition-colors duration-300" />
+                  {tutor.isVerified && (
+                    <span className="absolute -bottom-1 -right-1 inline-flex h-5 w-5 items-center justify-center rounded-full border bg-background">
+                      <BadgeCheck className="h-3.5 w-3.5 text-primary" />
+                    </span>
+                  )}
+                </div>
 
-          <CardContent className="pl-7 pr-5 py-5 flex flex-col gap-4 h-full">
-
-            {/* ── TOP: Avatar + identity + rate ── */}
-            <div className="flex items-center gap-3">
-              <div className="relative shrink-0">
-                <Avatar className="h-11 w-11 rounded-xl">
-                  <AvatarImage
-                    src={tutor.user.image ?? undefined}
-                    alt={tutor.user.name}
-                  />
-                  <AvatarFallback className="rounded-xl bg-muted font-semibold text-sm">
-                    {initials}
-                  </AvatarFallback>
-                </Avatar>
-
-                {tutor.isVerified && (
-                  <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-background ring-1 ring-border">
-                    <BadgeCheck className="h-3 w-3 text-primary" />
-                  </span>
-                )}
+                <div className="min-w-0 space-y-1">
+                  <h3 className="truncate text-base font-semibold text-foreground transition-colors group-hover:text-primary">
+                    {tutor.user.name}
+                  </h3>
+                  <p className="truncate text-sm text-muted-foreground">
+                    {tutor.title}
+                  </p>
+                </div>
               </div>
 
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-foreground truncate leading-snug group-hover:text-primary transition-colors duration-200">
-                  {tutor.user.name}
-                </p>
-                <p className="text-xs text-muted-foreground truncate mt-0.5">
-                  {tutor.title}
-                </p>
-              </div>
-
-              {/* Rate pill */}
-              <div className="shrink-0 rounded-lg bg-muted px-3 py-1.5 text-center">
-                <p className="text-sm font-bold text-foreground leading-none">
-                  ${tutor.hourlyRate}
-                </p>
-                <p className="text-[10px] text-muted-foreground mt-0.5">/ hr</p>
+              <div className="shrink-0 text-right">
+                <p className="text-sm font-semibold text-foreground">${tutor.hourlyRate}</p>
+                <p className="text-[10px] text-muted-foreground">per hour</p>
               </div>
             </div>
 
-            {/* ── Category ── */}
-            {firstCategory && (
-              <Badge
-                variant="outline"
-                className="w-fit gap-1 rounded-md px-2 py-0.5 text-xs font-medium"
-              >
-                <span aria-hidden>{firstCategory.icon}</span>
-                {firstCategory.name}
-              </Badge>
-            )}
+            <div className="flex flex-wrap items-center gap-2">
+              {firstCategory ? (
+                <Badge variant="outline" className="max-w-full gap-1 truncate">
+                  <span aria-hidden>{firstCategory.icon}</span>
+                  <span className="truncate">{firstCategory.name}</span>
+                </Badge>
+              ) : (
+                <Badge variant="outline">General Tutor</Badge>
+              )}
+            </div>
 
-            {/* ── Bio ── */}
-            <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 flex-1">
+            <p className="line-clamp-2 flex-1 text-sm leading-relaxed text-muted-foreground">
               {tutor.bio}
             </p>
 
-            <Separator />
-
-            {/* ── BOTTOM: three inline stats + caret ── */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4 text-xs text-muted-foreground">
-
-                {/* Rating */}
-                <div className="flex items-center gap-1">
-                  <Star className="h-3.5 w-3.5 fill-primary text-primary shrink-0" />
-                  <span className="font-semibold text-foreground">
-                    {displayRating ?? "New"}
-                  </span>
-                </div>
-
-                {/* Divider dot */}
-                <span className="h-1 w-1 rounded-full bg-border" aria-hidden />
-
-                {/* Experience */}
-                <div className="flex items-center gap-1">
-                  <Clock className="h-3.5 w-3.5 shrink-0" />
-                  <span>{experienceYrs} yrs</span>
-                </div>
-
-                {/* Divider dot */}
-                <span className="h-1 w-1 rounded-full bg-border" aria-hidden />
-
-                {/* Sessions */}
-                <div className="flex items-center gap-1">
-                  <Users className="h-3.5 w-3.5 shrink-0" />
-                  <span>{tutor._count.bookings}</span>
-                </div>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
+              <div className="flex items-center gap-1.5">
+                <Star className="h-3.5 w-3.5 text-primary" />
+                <span className="font-medium text-foreground">{displayRating ?? "New"}</span>
               </div>
+              <div className="flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5" />
+                <span>{experienceYrs} yrs</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Users className="h-3.5 w-3.5" />
+                <span>{tutor._count.bookings} bookings</span>
+              </div>
+            </div>
 
-              {/* Animated caret */}
+            <div className="flex items-center justify-between pt-1 text-sm">
+              <span className="font-medium text-foreground">View profile</span>
               <motion.div
-                className="text-muted-foreground group-hover:text-primary transition-colors duration-200"
+                className="text-muted-foreground transition-colors group-hover:text-primary"
                 animate={{ x: 0 }}
                 whileHover={{ x: 3 }}
               >
                 <ChevronRight className="h-4 w-4" />
               </motion.div>
             </div>
-
           </CardContent>
         </Card>
       </Link>

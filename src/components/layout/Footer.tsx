@@ -21,31 +21,31 @@ export function Footer() {
 
     const footerLinks = {
         students: [
-            { label: "Find Tutors", href: "/find-tutors" },
-            { label: "Browse Subjects", href: "/subjects" },
-            { label: "How It Works", href: "/how-it-works" },
-            { label: "Pricing", href: "/pricing" },
-            { label: "Success Stories", href: "/testimonials" }
+            { label: "Find Tutors", href: "/tutors" },
+            { label: "Browse Subjects", href: "#" },
+            { label: "How It Works", href: "#" },
+            { label: "Pricing", href: "#" },
+            { label: "Success Stories", href: "#" }
         ],
         tutors: [
-            { label: "Become a Tutor", href: "/become-tutor" },
-            { label: "Tutor Resources", href: "/resources" },
-            { label: "Tutor Guidelines", href: "/guidelines" },
-            { label: "Earnings", href: "/earnings" },
-            { label: "Support", href: "/support" }
+            { label: "Become a Tutor", href: "/dashboard" },
+            { label: "Tutor Resources", href: "#" },
+            { label: "Tutor Guidelines", href: "#" },
+            { label: "Earnings", href: "#" },
+            { label: "Support", href: "#" }
         ],
         company: [
             { label: "About Us", href: "/about" },
-            { label: "Careers", href: "/careers" },
-            { label: "Blog", href: "/blog" },
-            { label: "Press", href: "/press" },
+            { label: "Careers", href: "#" },
+            { label: "Blog", href: "#" },
+            { label: "Press", href: "#" },
             { label: "Contact", href: "/contact" }
         ],
         legal: [
-            { label: "Privacy Policy", href: "/privacy" },
-            { label: "Terms of Service", href: "/terms" },
-            { label: "Cookie Policy", href: "/cookies" },
-            { label: "Refund Policy", href: "/refund" }
+            { label: "Privacy Policy", href: "#" },
+            { label: "Terms of Service", href: "#" },
+            { label: "Cookie Policy", href: "#" },
+            { label: "Refund Policy", href: "#" }
         ]
     }
 
@@ -183,13 +183,13 @@ export function Footer() {
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
                         <p>© {currentYear} Skill Bridge. All rights reserved.</p>
                         <div className="flex gap-6">
-                            <Link href="/privacy" className="hover:text-primary transition-colors">
+                            <Link href="#" className="hover:text-primary transition-colors">
                                 Privacy
                             </Link>
-                            <Link href="/terms" className="hover:text-primary transition-colors">
+                            <Link href="#" className="hover:text-primary transition-colors">
                                 Terms
                             </Link>
-                            <Link href="/sitemap" className="hover:text-primary transition-colors">
+                            <Link href="#" className="hover:text-primary transition-colors">
                                 Sitemap
                             </Link>
                         </div>
